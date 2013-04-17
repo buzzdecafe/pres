@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+
+	<title>&lambda; in 5</title>
+	
+	<!-- Required stylesheet -->
+	<link rel="stylesheet" href="core/deck.core.css">
+	
+	<!-- Extension CSS files go here. Remove or add as needed. -->
+	<link rel="stylesheet" href="extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="extensions/status/deck.status.css">
+	<link rel="stylesheet" href="extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="extensions/scale/deck.scale.css">
+
+  <!-- include code mirror default css and the theme you want. -->
+  <link rel="stylesheet" href="extensions/codemirror/deck.codemirror.css">
+  <link rel="stylesheet" href="extensions/codemirror/themes/default.css">
+
+	<!-- Style theme. More available in /themes/style/ or create your own. -->
+	<link rel="stylesheet" href="themes/style/web-2.0.css">
+	
+	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
+	<link rel="stylesheet" href="themes/transition/horizontal-slide.css">
+
+  <!-- Base codemiror code -->
+  <script src="extensions/codemirror/codemirror.js"></script>
+
+  <!-- Syntax highlighting Modes -->
+
+	<!-- Required Modernizr file -->
+	<script src="modernizr.custom.js"></script>
+</head>
+<body class="deck-container">
+
+<!-- Begin slides. Just make elements with a class of slide. -->
+
+<section class="slide">
+<h1>Scheme in about 10 lines of Javascript</h1>
+<p style="text-align: center">A <blink>completely impractical</blink> use of your limited time</p>
+</section>
+
+<section class="slide">
+<h2>What is Scheme?</h2>
+<p>A functional languange with a minimal core. It relies on first-class functions to implement lists, and recursion for iteration.</p>
+<p>We can implement the most salient features of Scheme in about 10 lines of Javascript.</p>
+<p>Why? Because it's there.</p>
+</section>
+
+<section class="slide">
+<h2>What we need</h2>
+
+<ul>
+  <li>A function for creating a pair.</li>
+  <li>A function for getting the first part of the pair.</li>
+  <li>A function for getting the second part of the pair.</li>
+  <li>That's enough to build virtaully everything else.</li>
+</ul>
+</section>
+
+<script>
+  function asArray(list) {
+    var arr = arguments[1] || [];
+    return (list && head(list)) ? (arr.push(head(list)), asArray(tail(list), arr)) : arr;
+  }
+  function pair(x, y) { 
+    var fn = function(f) { return f(x, y); };
+    fn.toString = function() {
+      return "(" + asArray(this).join(" ") + ")";
+    };
+    fn.pair = true; // to support atom? function
+    return fn;
+  }
+  function head(f) {
+    return f(function(x, y) { return x; });
+  }
+  function tail(f) {
+    return f(function(x, y) { return y; });
+  }
+  function list() {
+    var args = Array.prototype.slice.call(arguments);
+    return (args.length === 0) ? null : pair(args.shift(), list.apply(null, args));
+  }
+  function map(fn, lat) {
+    return (lat === null) ? null : pair(fn(head(lat)), map(fn, tail(lat)));
+  }
+  function foldl(fn, acc, lat) {
+    return (lat === null) ? acc : foldl(fn, fn(acc, head(lat)), tail(lat));
+  }
+  function filter(fn, lat) {
+    return (lat === null) ? null : fn(head(lat)) ? pair(head(lat), filter(fn, tail(lat))) : filter(fn, tail(lat));
+  }
+</script>
+<section class="slide">
+<h2>Creating a pair</h2>
+
+<div id="cons" class="code" name="code" mode="javascript" style="display:none;"
+  >function pair(x, y) { 
+    return function(f) { return f(x, y); };
+  }</div>
+</section>
+
+<section class="slide">
+<h2>Getting the first part</h2>
+<div id="car" class="code" name="code" mode="javascript" style="display:none;"
+  >function head(f) {
+    return f(function(x, y) { return x; });
+  }</div>
+</section>
+
+<section class="slide">
+<h2>Getting the second part</h2>
+<div id="cdr" class="code" name="code" mode="javascript" style="display:none;"
+  >function tail(f) {
+    return f(function(x, y) { return y; });
+  }</div>
+</section>
+
+<section class="slide">
+<h2>Scheme in about 10 lines of Javascript</h2>
+<div id="scheme" class="code" name="code" mode="javascript" style="display:none;"
+  >function pair(x, y) { 
+  return function(f) { return f(x, y); };
+}
+function head(f) {
+  return f(function(x, y) { return x; });
+}
+function tail(f) {
+  return f(function(x, y) { return y; });
+}
+// and this line is a comment</div>
+</section>
+
+<section class="slide">
+<h2>It works</h2>
+<div>
+<div id="democar" class="code" name="code" mode="javascript" style="display:none;" runnable="true" globals="pair,head,tail"
+  >console.log(head(pair(1, 2)));</div>
+<div id="democdr" class="code" name="code" mode="javascript" style="display:none;" runnable="true" globals="pair,head,tail"
+  >console.log(tail(pair(1, 2)));</div>
+</div>
+<br/>
+<div class="slide">
+  <p>... but what is it?</p>
+<div id="wtf" class="code" name="code" mode="javascript" style="display:none;" runnable="true" globals="pair,head,tail"
+  >console.log(typeof pair(1, 2));</div>
+</div>
+</section>
+
+<section class="slide">
+<h2>Taking it further</h2>
+<p>What if we nest pairs?</p>
+<div>
+
+<div id="nest" class="code" name="code" mode="javascript" style="display:none;" runnable="true" globals="pair,head,tail"
+  >console.log(typeof pair(1, pair(2, pair(3, null))));</div>
+</div>
+<br/>
+<p class="slide">We've got a list, and we can get at its elements using <code>head</code> and <code>tail</code></p>
+</section>
+
+<section class="slide">
+<h2>List</h2>
+<div>
+  <p>We can use some native Javascript to implement the <code>list</code> function:</p>
+<div id="list" class="code" name="code" mode="javascript" style="display:none;" runnable="true" globals="pair,head,tail,list"
+  >function list() {
+  var args = Array.prototype.slice.call(arguments);
+  return (args.length === 0) ? null : 
+    pair(args.shift(), list.apply(null, args));
+}
+console.log(head(tail(tail(list(1, 2, 3, 4, 5, 10)))));</div>
+</div>
+</section>
+
+<section class="slide">
+<h2>Building up some more</h2>
+
+<div><textarea id="fns" name="code" class="code" mode="javascript" style="display: none;"
+    >function map(fn, lat) {
+  return (lat === null) ? null : pair(fn(head(lat)), map(fn, tail(lat)));
+}
+function foldl(fn, acc, lat) {
+  return (lat === null) ? acc : foldl(fn, fn(acc, head(lat)), tail(lat));
+}
+function filter(fn, lat) {
+  return (lat === null) ? null : 
+    fn(head(lat)) ? pair(head(lat), filter(fn, tail(lat))) : 
+      filter(fn, tail(lat));
+}
+//etc., etc.</textarea></div>
+</section>
+
+<section class="slide">
+<h2>Examples</h2>
+
+<div><textarea id="ex1" name="code" class="code" mode="javascript" style="display: none;" runnable="true" globals="head,tail,pair,list,map"
+    >var lat = list(1,2,3,4,5,6,7,8,9);
+console.log(map(function(x) { return x * x; }, lat));    
+</textarea></div>
+<div><textarea id="ex2" name="code" class="code" mode="javascript" style="display: none;" runnable="true" globals="head,tail,pair,list,foldl"
+    >var lat = list(1,2,3,4,5,6,7,8,9);
+console.log(foldl(function(x, y) { return x + y; }, 0, lat));    
+</textarea></div>
+<div><textarea id="ex3" name="code" class="code" mode="javascript" style="display: none;" runnable="true" globals="head,tail,pair,list,filter"
+    >var lat = list(1,2,3,4,5,6,7,8,9);
+console.log(filter(function(x) { return x % 2 === 0; }, lat));    
+</textarea></div>
+</section>
+<!-- End slides. -->
+
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+	<datalist id="goto-datalist"></datalist>
+	<input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<!-- End extension snippets. -->
+
+
+<!-- Required JS files. -->
+<script src="jquery-1.7.2.min.js"></script>
+<script src="core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="core/deck.core.js"></script>
+<script src="extensions/hash/deck.hash.js"></script>
+<script src="extensions/menu/deck.menu.js"></script>
+<script src="extensions/goto/deck.goto.js"></script>
+<script src="extensions/status/deck.status.js"></script>
+<script src="extensions/navigation/deck.navigation.js"></script>
+<script src="extensions/scale/deck.scale.js"></script>
+
+<!-- include the base codemirror code. -->
+<script src="extensions/codemirror/codemirror.js"></script>
+
+<!-- javascript -->
+<script src="extensions/codemirror/mode/javascript/javascript.js"></script>
+
+<!-- Plugin code -->
+<script src="extensions/codemirror/deck.codemirror.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+	$(function() {
+		$.deck('.slide');
+	});
+</script>
+</body>
+</html>
