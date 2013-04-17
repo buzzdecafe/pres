@@ -201,16 +201,13 @@ function filter(fn, lat) {
 
 <div><textarea id="ex1" name="code" class="code" mode="javascript" style="display: none;" runnable="true" globals="head,tail,pair,list,map"
     >var lat = list(1,2,3,4,5,6,7,8,9);
-console.log(map(function(x) { return x * x; }, lat));    
-</textarea></div>
+console.log(map(function(x) { return x * x; }, lat));</textarea></div>
 <div><textarea id="ex2" name="code" class="code" mode="javascript" style="display: none;" runnable="true" globals="head,tail,pair,list,foldl"
     >var lat = list(1,2,3,4,5,6,7,8,9);
-console.log(foldl(function(x, y) { return x + y; }, 0, lat));    
-</textarea></div>
+console.log(foldl(function(x, y) { return x + y; }, 0, lat));    </textarea></div>
 <div><textarea id="ex3" name="code" class="code" mode="javascript" style="display: none;" runnable="true" globals="head,tail,pair,list,filter"
     >var lat = list(1,2,3,4,5,6,7,8,9);
-console.log(filter(function(x) { return x % 2 === 0; }, lat));    
-</textarea></div>
+console.log(filter(function(x) { return x % 2 === 0; }, lat));   </textarea></div>
 </section>
 <!-- End slides. -->
 
