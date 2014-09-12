@@ -37,6 +37,7 @@
 
 	<!-- Required Modernizr file -->
 	<script src="modernizr.custom.js"></script>
+	<script src="http://cdn.jsdelivr.net/ramda/0.4.3/ramda.min.js"></script>
 </head>
 <body class="deck-container">
 
@@ -53,54 +54,64 @@
 </section>
 
 <section class="slide">
-  <h2>Consider the humble Function</h4>
+  <h2>Let's talk about functions</h4>
 
-  <p>a &#8594; b</p>
+  <p class="slide">a &#8594; b</p>
+  <p class="slide">Input an <em>a</em>, get out a <em>b</em></p>
+  <p class="slide">Any input <em>a</em> will map to one output <em>b</em></p>
+
+  <h3 class="slide">Not methods!</h3>
+
+  <p class="slide">a, x?, y?, ... &#8594; b? c? void?</p>
+  <p class="slide">... some side effects happened, maybe? something happened inside some object ...</p>
+  <p class="slide">... and then something returns ... right?</p>
+  <p class="slide">... well, I get the same output for the same input then, right?</p>
 </section>
 
 <section class="slide">
   <h2>Function: Immunize your cat</h2>
-  <ul class="fnpic">
+  <ul class="fnpic fnpic3">
     <li class="slide">
       <figure style="text-align: center">
         <img src="img/cat_pre.png" />
-        <figcaption>Input: cat</figcaption>
+        <figcaption>Input: Cat</figcaption>
       </figure>
     </li>
     <li class="slide">
       <figure style="text-align: center">
         <img src="img/cat_shot.png" />
-        <figcaption>Function: immunize</figcaption>
+        <figcaption>Function: Immunize</figcaption>
       </figure>
     </li>
     <li class="slide">
       <figure style="text-align: center">
         <img src="img/cat_post.png" />
-        <figcaption>Output: cat</figcaption>
+        <figcaption>Output: Cat</figcaption>
       </figure>
     </li>
   </ul>
+  <p class="slide c">A function from Cat -&gt; Cat</p>
 </section>  
 
 <section class="slide">
   <h2>Strictly speaking ...</h2>
-  <ul class="fnpic">
+  <ul class="fnpic fnpic3">
     <li class="slide">
       <figure style="text-align: center">
         <img src="img/cat_pre.png" />
-        <figcaption>Input: cat</figcaption>
+        <figcaption>Input: Cat</figcaption>
       </figure>
     </li>
     <li class="slide">
       <figure style="text-align: center">
         <img src="img/cat_shot.png" />
-        <figcaption>Function: immunize</figcaption>
+        <figcaption>Function: Immunize</figcaption>
       </figure>
     </li>
     <li class="slide">
       <figure style="text-align: center">
         <img src="img/cat_post.png" />
-        <figcaption>Output: cat</figcaption>
+        <figcaption>Output: Cat</figcaption>
       </figure>
     </li>
   </ul>
@@ -108,18 +119,54 @@
     <li class="slide">
       <figure style="text-align: center">
         <img src="img/cat_gc.png" />
-        <figcaption>Input cat GC'ed</figcaption>
+        <figcaption>Input Cat GC'ed</figcaption>
       </figure>
     </li>
   </ul>
 </section>  
 
 <section class="slide">
-  <h2><del>Who Gives a Shit?</del> Motivation</h2>
+  <h2>Functor</h2>
+  <ul class="fnpic fnpic3">
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/cat_box_pre.png" />
+        <figcaption>Input: Cat Carrier</figcaption>
+      </figure>
+    </li>
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/cat_shot.png" />
+        <figcaption>Function: Immunize</figcaption>
+      </figure>
+    </li>
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/cat_box_post.png" />
+        <figcaption>Output: Cat Carrier</figcaption>
+      </figure>
+    </li>
+  </ul>
+  <p class="slide c">n.b.: Same function from Cat -&gt; Cat</p>
 </section>
 
 <section class="slide">
-  Laws and stuff
+  <h2>What the Functor</h2>
+  <p>A functor is simply a container that you can <em>map</em> a function over.</p>
+  <h3 class="slide">So what?</h3> 
+</section>
+
+<section class="slide">
+  <h2>Digression: A few words about function composition</h2>
+  <p>When you build up a functional pipeline, everybody has to play nice.</p>
+  <div id="capId" class="code" name="code" mode="javascript" style="display:none;"
+    >var capitalizeId = R.compose(capitalize, R.get('id'), document.getElementById);</div>
+  <p class="slide">What if there is no element with the ID you ask for?</p>
+
+</section>
+
+<section class="slide">
+  <h2>Apply and Applicative</h2>
 </section>
 
 <section class="slide">
@@ -134,10 +181,8 @@
 <section class="slide">
 <h2>It works</h2>
 <div>
-<div id="democar" class="code" name="code" mode="javascript" style="display:none;" runnable="true" globals="pair,head,tail"
+<div id="democar" class="code" name="code" mode="javascript" style="display:none;" runnable="true" globals="R"
   >console.log(head(pair(1, 2)));</div>
-<div id="democdr" class="code" name="code" mode="javascript" style="display:none;" runnable="true" globals="pair,head,tail"
-  >console.log(tail(pair(1, 2)));</div>
 </div>
 <br/>
 </section>
