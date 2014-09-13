@@ -330,8 +330,7 @@ Either.prototype.map = function(f) {
     <h2>Apply (Maybe)</h2>
   <div id="democar" class="code" name="code" mode="javascript" style="display:none;" runnable="false" globals="R"
     >Maybe.prototype.ap = function(vs) {
-    // `this` must be wrapping a function!
-    return (this.value == null) ? this : vs.map(this.value);
+    return (typeof this.value !== 'function') ? new Maybe(null) : vs.map(this.value);
 };</div>
 
   </div>
