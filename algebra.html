@@ -37,21 +37,23 @@
 
 	<!-- Required Modernizr file -->
 	<script src="modernizr.custom.js"></script>
-	<script src="http://cdn.jsdelivr.net/ramda/0.4.3/ramda.min.js"></script>
 </head>
 <body class="deck-container">
 
 <!-- Begin slides. Just make elements with a class of slide. -->
 
 <section class="slide">
-<h1>Algebraic Types in JavaScript</h1>
+  <h1>Functors and Applicatives<br/><span class="slide">in JavaScript<span class="slide">???</span></span></h1>
 </section>
+
+<!--
 <section class="slide">
 <figure style="text-align: center">
   <img src="img/quixote.png" />
   <figcaption>"I'll save you, JavaScript!"</figcaption>
 </figure>
 </section>
+-->
 
 <section class="slide">
   <h2>Let's talk about functions</h4>
@@ -63,7 +65,8 @@
   <h3 class="slide">Not methods!</h3>
 
   <p class="slide">a, x?, y?, ... &#8594; b? c? void?</p>
-  <p class="slide">... some side effects happened, maybe? something happened inside some object ...</p>
+  <p class="slide">... something happened inside some object ...</p>
+  <p class="slide">... some side effects happened, maybe affecting state somewhere else?</p>
   <p class="slide">... and then something returns ... right?</p>
   <p class="slide">... well, I get the same output for the same input then, right?</p>
 </section>
@@ -90,7 +93,7 @@
       </figure>
     </li>
   </ul>
-  <p class="slide c">A function from Cat -&gt; Cat</p>
+  <p class="slide c">A function from Cat &srarr; Cat</p>
 </section>  
 
 <section class="slide">
@@ -126,12 +129,46 @@
 </section>  
 
 <section class="slide">
-  <h2>Functor</h2>
+  <h2>Function: Immunize your ???</h2>
+  <ul class="fnpic fnpic3">
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/cat_null.png" />
+        <figcaption>Input: Null</figcaption>
+      </figure>
+    </li>
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/crash.png" />
+        <figcaption>Function: Uh-oh</figcaption>
+      </figure>
+    </li>
+  </ul>
+  <p class="slide c">A function from <del>Cat &srarr; Cat</del> <span class="slide">null &srarr; Shit</span></p>
+</section>  
+
+<section class="slide">
+  <h2>Digression: A few words about function composition</h2>
+  <p>When you build up a functional pipeline, everybody has to play nice.</p>
+  <div id="capId" class="code" name="code" mode="javascript" style="display:none;"
+    >var capitalize = R.compose(
+    R.toUpperCase, 
+    R.prop('textContent'), 
+    document.getElementById
+);</div>
+  <p class="slide"><code>capitalize :: String &srarr; DOMElement &srarr; String &srarr; String</code></p>
+  <p class="slide"><code>capitalize :: String &srarr; String</code></p>
+  </p>
+  <p class="slide">What if there is no element with the ID you input?</p>
+</section>
+
+<section class="slide">
+  <h2>Functor: Immunize your Cat</h2>
   <ul class="fnpic fnpic3">
     <li class="slide">
       <figure style="text-align: center">
         <img src="img/cat_box_pre.png" />
-        <figcaption>Input: Cat Carrier</figcaption>
+        <figcaption>Input: Container</figcaption>
       </figure>
     </li>
     <li class="slide">
@@ -143,50 +180,262 @@
     <li class="slide">
       <figure style="text-align: center">
         <img src="img/cat_box_post.png" />
-        <figcaption>Output: Cat Carrier</figcaption>
+        <figcaption>Output: Container</figcaption>
       </figure>
     </li>
   </ul>
-  <p class="slide c">n.b.: Same function from Cat -&gt; Cat</p>
+  <p class="slide c">n.b.: Same function from Cat &srarr; Cat</p>
 </section>
 
 <section class="slide">
   <h2>What the Functor</h2>
-  <p>A functor is simply a container that you can <em>map</em> a function over.</p>
+  <p>A functor is simply a function that lets you <em>map</em> over the contents of a container.</p>
+  <p><code>map :: (a &srarr; b) &srarr; [a] &srarr; [b]</code></p>
   <h3 class="slide">So what?</h3> 
 </section>
 
 <section class="slide">
-  <h2>Digression: A few words about function composition</h2>
-  <p>When you build up a functional pipeline, everybody has to play nice.</p>
-  <div id="capId" class="code" name="code" mode="javascript" style="display:none;"
-    >var capitalizeId = R.compose(capitalize, R.get('id'), document.getElementById);</div>
-  <p class="slide">What if there is no element with the ID you ask for?</p>
-
+  <h2>Functor: Here's What--Immunize your ???</h2>
+  <ul class="fnpic fnpic3">
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/box.png" />
+        <figcaption>Input: Container</figcaption>
+      </figure>
+    </li>
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/dots.png" />
+        <figcaption>Nothing Happens</figcaption>
+      </figure>
+    </li>
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/box.png" />
+        <figcaption>Output: Container</figcaption>
+      </figure>
+    </li>
+  </ul>
+  <p class="slide c">n.b.: Same function from Cat &srarr; Cat, now null safe!</p>
 </section>
 
 <section class="slide">
-  <h2>Apply and Applicative</h2>
-</section>
-
-<section class="slide">
-<h2>Maybe</h2>
+<h2>Maybe Functor</h2>
 
 <div id="cons" class="code" name="code" mode="javascript" style="display:none;"
-  >function pair(x, y) { 
-  return function(f) { return f(x, y); };
-}</div>
+  >function Maybe(x) { 
+    if (!(this instanceof Maybe)) { return new Maybe(x); }
+    this.value = x;
+}
+Maybe.prototype.map = function(fn) {
+    return this.value == null ? this : new Maybe(fn(this.value));
+};</div>
 </section>
 
 <section class="slide">
-<h2>It works</h2>
-<div>
-<div id="democar" class="code" name="code" mode="javascript" style="display:none;" runnable="true" globals="R"
-  >console.log(head(pair(1, 2)));</div>
-</div>
-<br/>
+  <h2>Composing with the Maybe Functor</h2>
+  <div id="capId" class="code" name="code" mode="javascript" style="display:none;"
+    >var capitalize = R.compose(
+    R.map(R.toUpperCase), 
+    R.map(R.prop('textContent')), 
+    Maybe, 
+    document.getElementById
+);</div>
+  <p class="slide"><code>capitalize :: String &srarr; Maybe(DOMElement) &srarr; Maybe(String) &srarr; Maybe(String)</code></p>
+  <p class="slide"><code>capitalize :: String &srarr; Maybe(String)</code></p>
+  <ul>
+    <li class="slide"><strong>Pro:</strong> No need to guard inside the composing functions</li>
+    <li class="slide"><strong>Pro:</strong> Output value is now wrapped up, can only be accessed by mapping</li>
+    <li class="slide"><strong>Con:</strong> Output value is now wrapped up, can only be accessed by mapping</li>
+  </ul>
 </section>
 
+<section class="slide">
+  <h2>Some Other Functors</h2>
+
+  <div class="slide">
+    <h3>Either</h3>
+    <ul>
+      <li>Has a value (<code>right</code>) or a message (<code>left</code>)</li>
+      <li><div id="capId" class="code" name="code" mode="javascript" style="display:none;"
+        >function Either(left, right) {
+    if (!(this instanceof Either)) { return new Either(left, right); }
+    this.left = left;
+    this.right = right;
+}
+Either.prototype.map = function(f) {
+    return this.right == null ? this : new Either(this.left, f(this.right));
+}</div></li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <h3>Promise</h3>
+    <ul>
+      <li>The <code>map</code> operation is <code>then</code></li>
+      <li><code>map(add1, Promise(2)); //=&gt; Promise(3)</code></li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <h3>Validation, IO, Reader, Writer, State, Future, ...</h3>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Apply</h2>
+  <ul class="fnpic fnpic4">
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/syringe.png" />
+        <figcaption>Input: Container</figcaption>
+      </figure>
+    </li>
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/cat_box_pre.png" />
+        <figcaption>Input: Container</figcaption>
+      </figure>
+    </li>
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/cat_shot.png" />
+        <figcaption>Function: Immunize</figcaption>
+      </figure>
+    </li>
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/cat_box_post.png" />
+        <figcaption>Output: Container</figcaption>
+      </figure>
+    </li>
+  </ul>
+  <p class="slide c">n.b.: Same function from Cat &srarr; Cat, yet again!</p>
+</section>
+
+<section class="slide">
+  <div>
+    <h2>Apply (Array)</h2>
+    <p>Applies a function (or functions) in a container to a value (or values) in a container.</p>
+    <p><code>ap :: [f] &srarr; [a] &srarr; [f a]</code></p>
+
+    <div id="democar" class="code" name="code" mode="javascript" style="display:none;" runnable="false" globals="R"
+    >R.ap = curry(function(fns, vs) {
+    return foldl(function(acc, fn) {
+        return concat(acc, map(fn, vs));
+    }, [], fns);
+});</div>
+  </div>
+  <div class="slide">
+    <h2>Apply (Maybe)</h2>
+  <div id="democar" class="code" name="code" mode="javascript" style="display:none;" runnable="false" globals="R"
+    >Maybe.prototype.ap = function(vs) {
+    // `this` must be wrapping a function!
+    return (this.value == null) ? this : vs.map(this.value);
+};</div>
+
+  </div>
+</section>
+
+<section class="slide">
+<h2>Problem: Matching Strings</h2>
+
+  <ul>
+    <li>We have a list of characters [C]</span></li>
+    <li>We want a function that takes a list of characters [L]</li>
+    <li>If the input list [L] contains all of the characters in [C], then it is <em>true</em>, otherwise <em>false</em></li>
+  </ul>
+  
+  <p class="slide"><code>hasAbc :: [String] &srarr; Boolean</code></p>
+    <p class="slide"><code>hasAbc :: [String] &srarr; [Function] &srarr; [Boolean] &srarr; Boolean</code></p>
+</section>
+
+<section class="slide">
+  <h2>hasAbc</h2>
+
+  <ul>
+    <li class="slide"><code>R.map(R.contains, [C]) //=&gt; [String] &srarr; [Function: ([String] -&gt; Boolean)]</code></li>
+    <li class="slide"><code>R.ap(R.map(R.contains, [C])) //=&gt; [String] &srarr; [Boolean]</code></li>
+    <li class="slide"><code>R.every(R.I) //=&gt; [Boolean] &srarr; Boolean</code></li>
+  <ul>
+  <div id="democar" class="code" name="code" mode="javascript" style="display:none;" globals="R"
+      >var hasAbc = R.compose(
+    R.every(R.I),
+    R.ap(R.map(R.contains, [C]))
+);</div>
+  <p class="slide">Not quite right yet.... <span class="slide">Is that the right signature for <code>ap</code>?</span></p>
+</section>
+
+<section class="slide">
+  <h2>Applicative</h2>
+  <p>Wraps an arbitrary object in a container.</p>
+  <p><code>of ::  x &srarr; [x]</code></p>
+
+  <ul class="fnpic">
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/syringe_pre.png" />
+        <figcaption>Input: Syringe</figcaption>
+      </figure>
+    </li>
+    <li class="slide">
+      <figure style="text-align: center">
+        <img src="img/syringe.png" />
+        <figcaption>Output: Container</figcaption>
+      </figure>
+    </li>
+  </ul>
+
+  <div id="democar" class="code" name="code" mode="javascript" style="display:none;" globals="R"
+    >R.of = function(x) {
+    return [x];
+};</div>
+</section>
+
+<section class="slide">
+  <h2>hasAbc, take 2</h2>
+
+  <ul>
+    <li class="slide"><code>R.of //=&gt; * &srarr; [*]</code></li>
+    <li class="slide"><code>R.ap(R.map(R.contains, [C])) //=&gt; [[String]] &srarr; [Boolean]</code></li>
+    <li class="slide"><code>R.every(R.I) //=&gt; [Boolean] &srarr; Boolean</code></li>
+  <ul>
+  <div id="democar" class="code" name="code" mode="javascript" style="display:none;" runnable="true" globals="R"
+      >var hasAbc = R.compose(
+  R.every(R.I),
+  R.ap(R.map(R.contains, ['a', 'b', 'c'])),
+  R.of
+);
+
+console.log('hasAbc(xyz)', hasAbc(['x', 'y', 'z'])); // false
+console.log('hasAbc(xyzab)', hasAbc(['x', 'y', 'z', 'a', 'b'])); // false
+console.log('hasAbc(cxbyaz)', hasAbc(['c', 'x', 'b', 'y', 'a', 'z'])); // true
+console.log('hasAbc(abcdefg)', hasAbc(['a', 'b', 'c', 'd', 'e', 'f', 'g'])); // true
+</div>
+</section>
+
+<section class="slide">
+  <h2>Bibliography, Resources, &amp; Further Reading</h2>
+  <dl>
+    <dt><a href="https://www.youtube.com/watch?v=m3svKOdZijA">Hey Underscore, You're Doing It Wrong</a>, Brian Lonsdorf (@drboolean)</dt>
+    <dt><a href="http://www.slideshare.net/leogarciacrespo/hardcore-functional-programming-36012919">Hardcore functional programming in Javascript</a>, Leonardo Crespo</dt>
+    <dt><a href="http://fr.umio.us/favoring-curry/">Favoring Curry</a>, Scott Sauyet (@scott_sauyet)</dt>
+    <dt><a href="http://fr.umio.us/why-ramda/">Why Ramda</a>, Scott Sauyet (@scott_sauyet)</dt>
+    <dt><a href="http://buzzdecafe.github.io/code/2014/05/16/introducing-ramda/">Introducing Ramda</a>, Michael Hurley (@buzzdecafe)</dt>
+    <dt><a href="http://buzzdecafe.github.io/code/2014/08/12/applicatives-ramda-style/">The Tao of &lambda;: Applicatives, Ramda-style</a>, Michael Hurley (@buzzdecafe)</dt>
+    <dt><a href="https://github.com/fantasyland/">Fantasy-Land</a>, Brian McKenna et al.</dt>
+    <dt><a href="https://github.com/folktale/">Folktale</a>, robotlolita</dt>
+    <dt><a href="https://github.com/CrossEye/ramda">Ramda.js</a>, Scott Sauyet &amp; Michael Hurley</dt>
+  </dl>
+  <hr/>
+  <p>Illustrations courtesy of <a href="http://www.jcphillipps.com/">J. C. Phillipps</a></p>
+  <p>No animals were harmed in the making of this presentation</p>
+</section>
+
+<section class="slide">
+  <p>Coming Soon! A presentation that hits you right in the </p>
+  <h2>Monads!</h2>
+</section>
 <!-- End slides. -->
 
 
@@ -235,6 +484,7 @@
 
 <!-- javascript -->
 <script src="extensions/codemirror/mode/javascript/javascript.js"></script>
+<script src="http://cdn.jsdelivr.net/ramda/0.4.3/ramda.min.js"></script>
 
 <!-- Plugin code -->
 <script src="extensions/codemirror/deck.codemirror.js"></script>
