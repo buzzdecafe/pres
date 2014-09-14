@@ -152,11 +152,10 @@
   <p>When you build up a functional pipeline, everybody has to play nice.</p>
   <div id="capId" class="code" name="code" mode="javascript" style="display:none;"
     >var capitalize = R.compose(
-    R.toUpperCase, 
-    R.prop('textContent'), 
-    document.getElementById
+    R.toUpperCase,           // String &srarr; String
+    R.prop('textContent'),   // Object &srarr; String
+    document.getElementById  // String &srarr; DOMElement
 );</div>
-  <p class="slide"><code>capitalize :: String &srarr; DOMElement &srarr; String &srarr; String</code></p>
   <p class="slide"><code>capitalize :: String &srarr; String</code></p>
   </p>
   <p class="slide">What if there is no element with the ID you input?</p>
@@ -236,12 +235,11 @@ Maybe.prototype.map = function(fn) {
   <h2>Composing with the Maybe Functor</h2>
   <div id="capId" class="code" name="code" mode="javascript" style="display:none;"
     >var capitalize = R.compose(
-    R.map(R.toUpperCase), 
-    R.map(R.prop('textContent')), 
-    Maybe, 
-    document.getElementById
+    R.map(R.toUpperCase),         // Maybe(String) &srarr; Maybe(String)
+    R.map(R.prop('textContent')), // Maybe(Object) &srarr; Maybe(String)
+    Maybe,                        // Object &srarr; Maybe(Object)
+    document.getElementById       // String &srarr; DOMElement
 );</div>
-  <p class="slide"><code>capitalize :: String &srarr; Maybe(DOMElement) &srarr; Maybe(String) &srarr; Maybe(String)</code></p>
   <p class="slide"><code>capitalize :: String &srarr; Maybe(String)</code></p>
   <ul>
     <li class="slide"><strong>Pro:</strong> No need to guard inside the composing functions</li>
@@ -346,21 +344,20 @@ Either.prototype.map = function(f) {
   </ul>
   
   <p class="slide"><code>hasAbc :: [String] &srarr; Boolean</code></p>
-    <p class="slide"><code>hasAbc :: [String] &srarr; [Function] &srarr; [Boolean] &srarr; Boolean</code></p>
 </section>
 
 <section class="slide">
   <h2>hasAbc</h2>
 
   <ul>
-    <li class="slide"><code>R.map(R.contains, [C]) //=&gt; [String] &srarr; [Function: ([String] -&gt; Boolean)]</code></li>
+    <li class="slide"><code>R.map(R.contains, [C]) //=&gt; [Function: ([String] &srarr; Boolean)]</code></li>
     <li class="slide"><code>R.ap(R.map(R.contains, [C])) //=&gt; [String] &srarr; [Boolean]</code></li>
     <li class="slide"><code>R.every(R.I) //=&gt; [Boolean] &srarr; Boolean</code></li>
   <ul>
   <div id="democar" class="code" name="code" mode="javascript" style="display:none;" globals="R"
       >var hasAbc = R.compose(
-    R.every(R.I),
-    R.ap(R.map(R.contains, [C]))
+    R.every(R.I),                // [Boolean] &srarr; Boolean
+    R.ap(R.map(R.contains, [C])) // [String] &srarr; [Boolean] 
 );</div>
   <p class="slide">Not quite right yet.... <span class="slide">Is that the right signature for <code>ap</code>?</span></p>
 </section>
@@ -401,15 +398,19 @@ Either.prototype.map = function(f) {
   <ul>
   <div id="democar" class="code" name="code" mode="javascript" style="display:none;" runnable="true" globals="R"
       >var hasAbc = R.compose(
-  R.every(R.I),
-  R.ap(R.map(R.contains, ['a', 'b', 'c'])),
-  R.of
+    R.every(R.I),                             // [Boolean] &srarr; Boolean
+    R.ap(R.map(R.contains, ['a', 'b', 'c'])), // [[String]] &srarr; [Boolean]
+    R.of                                      // [String] &srarr; [[String]]
 );
 
-console.log('hasAbc(xyz)', hasAbc(['x', 'y', 'z'])); // false
-console.log('hasAbc(xyzab)', hasAbc(['x', 'y', 'z', 'a', 'b'])); // false
-console.log('hasAbc(cxbyaz)', hasAbc(['c', 'x', 'b', 'y', 'a', 'z'])); // true
-console.log('hasAbc(abcdefg)', hasAbc(['a', 'b', 'c', 'd', 'e', 'f', 'g'])); // true
+console.log('hasAbc(xyz)', 
+             hasAbc(['x', 'y', 'z'])); // false
+console.log('hasAbc(xyzab)', 
+             hasAbc(['x', 'y', 'z', 'a', 'b'])); // false
+console.log('hasAbc(cxbyaz)', 
+             hasAbc(['c', 'x', 'b', 'y', 'a', 'z'])); // true
+console.log('hasAbc(abcdefg)', 
+             hasAbc(['a', 'b', 'c', 'd', 'e', 'f', 'g'])); // true
 </div>
 </section>
 
@@ -421,7 +422,7 @@ console.log('hasAbc(abcdefg)', hasAbc(['a', 'b', 'c', 'd', 'e', 'f', 'g'])); // 
     <dt><a href="http://fr.umio.us/favoring-curry/">Favoring Curry</a>, Scott Sauyet (@scott_sauyet)</dt>
     <dt><a href="http://fr.umio.us/why-ramda/">Why Ramda</a>, Scott Sauyet (@scott_sauyet)</dt>
     <dt><a href="http://buzzdecafe.github.io/code/2014/05/16/introducing-ramda/">Introducing Ramda</a>, Michael Hurley (@buzzdecafe)</dt>
-    <dt><a href="http://buzzdecafe.github.io/code/2014/08/12/applicatives-ramda-style/">The Tao of &lambda;: Applicatives, Ramda-style</a>, Michael Hurley (@buzzdecafe)</dt>
+    <dt><a href="http://buzzdecafe.github.io/code/2014/08/12/applicatives-ramda-style/">The Tao of &lambda;: Applicatives, Ramda style</a>, Michael Hurley (@buzzdecafe)</dt>
     <dt><a href="https://github.com/fantasyland/">Fantasy-Land</a>, Brian McKenna et al.</dt>
     <dt><a href="https://github.com/folktale/">Folktale</a>, robotlolita</dt>
     <dt><a href="https://github.com/CrossEye/ramda">Ramda.js</a>, Scott Sauyet &amp; Michael Hurley</dt>
