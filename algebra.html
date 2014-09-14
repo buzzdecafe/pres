@@ -189,7 +189,7 @@
 <section class="slide">
   <h2>What the Functor</h2>
   <p>A functor is simply a function that lets you <em>map</em> over the contents of a container.</p>
-  <p><code>map :: (a &srarr; b) &srarr; [a] &srarr; [b]</code></p>
+  <p><code>map :: (a &srarr; b) &srarr; Functor a &srarr; Functor b</code></p>
   <h3 class="slide">So what?</h3> 
 </section>
 
@@ -240,7 +240,7 @@ Maybe.prototype.map = function(fn) {
     Maybe,                        // Object &srarr; Maybe(Object)
     document.getElementById       // String &srarr; DOMElement
 );</div>
-  <p class="slide"><code>capitalize :: String &srarr; Maybe(String)</code></p>
+  <p><code>capitalize :: String &srarr; Maybe(String)</code></p>
   <ul>
     <li class="slide"><strong>Pro:</strong> No need to guard inside the composing functions</li>
     <li class="slide"><strong>Pro:</strong> Output value is now wrapped up, can only be accessed by mapping</li>
@@ -278,6 +278,12 @@ Either.prototype.map = function(f) {
   <div class="slide">
     <h3>Validation, IO, Reader, Writer, State, Future, ...</h3>
   </div>
+</section>
+
+<section class="slide">
+  <h2>Array is a Functor</h2>
+  <p><code>map :: (a &srarr; b) &srarr; [a] &srarr; [b]</code></p>
+  <p class="slide">(Arrays are complected with the notion of iteration.)</p>
 </section>
 
 <section class="slide">
