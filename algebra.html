@@ -62,7 +62,9 @@
   <p class="slide">Input an <em>a</em>, get out a <em>b</em></p>
   <p class="slide">Any input <em>a</em> will map to one output <em>b</em></p>
 
-  <h3 class="slide">Not methods!</h3>
+  <h3 class="slide">Q: When is a function not a function?</h3>
+  <h3 class="slide">A: When it's a method</h3>
+
 
   <p class="slide">a, x?, y?, ... &#8594; b? c? void?</p>
   <p class="slide">... something happened inside some object ...</p>
@@ -397,11 +399,14 @@ Either.prototype.map = function(f) {
 <section class="slide">
   <h2>hasAbc, take 2</h2>
 
+  <p>What we want is a function <code>hasAbc :: [String] &srarr; Boolean</code></p>
+
   <ul>
     <li class="slide"><code>R.of //=&gt; * &srarr; [*]</code></li>
     <li class="slide"><code>R.ap(R.map(R.contains, [C])) //=&gt; [[String]] &srarr; [Boolean]</code></li>
     <li class="slide"><code>R.every(R.I) //=&gt; [Boolean] &srarr; Boolean</code></li>
   <ul>
+  <div class="slide">
   <div id="democar" class="code" name="code" mode="javascript" style="display:none;" runnable="true" globals="R"
       >var hasAbc = R.compose(
     R.every(R.I),                             // [Boolean] &srarr; Boolean
@@ -418,6 +423,7 @@ console.log('hasAbc(cxbyaz)',
 console.log('hasAbc(abcdefg)', 
              hasAbc(['a', 'b', 'c', 'd', 'e', 'f', 'g'])); // true
 </div>
+</div>
 </section>
 
 <section class="slide">
@@ -429,12 +435,12 @@ console.log('hasAbc(abcdefg)',
     <dt><a href="http://fr.umio.us/why-ramda/">Why Ramda</a>, Scott Sauyet (@scott_sauyet)</dt>
     <dt><a href="http://buzzdecafe.github.io/code/2014/05/16/introducing-ramda/">Introducing Ramda</a>, Michael Hurley (@buzzdecafe)</dt>
     <dt><a href="http://buzzdecafe.github.io/code/2014/08/12/applicatives-ramda-style/">The Tao of &lambda;: Applicatives, Ramda style</a>, Michael Hurley (@buzzdecafe)</dt>
-    <dt><a href="https://github.com/fantasyland/">Fantasy-Land</a>, Brian McKenna et al.</dt>
-    <dt><a href="https://github.com/folktale/">Folktale</a>, robotlolita</dt>
+    <dt><a href="https://github.com/fantasyland/">Fantasy-Land</a>, Brian McKenna (@puffnfresh) et al.</dt>
+    <dt><a href="https://github.com/folktale/">Folktale</a>, robotlolita (@robotlolita)</dt>
     <dt><a href="https://github.com/CrossEye/ramda">Ramda.js</a>, Scott Sauyet &amp; Michael Hurley</dt>
   </dl>
   <hr/>
-  <p>Illustrations courtesy of <a href="http://www.jcphillipps.com/">J. C. Phillipps</a></p>
+  <p>Illustrations courtesy of <a href="http://www.jcphillipps.com/">J. C. Phillipps</a> (@jcphillipps)</p>
   <p>No animals were harmed in the making of this presentation</p>
 </section>
 
