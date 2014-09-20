@@ -156,7 +156,7 @@
     >var capitalize = R.compose(
     R.toUpperCase,           // String &srarr; String
     R.prop('textContent'),   // Object &srarr; String
-    document.getElementById  // String &srarr; DOMElement
+    document.getElementById.bind(document)  // String &srarr; DOMElement
 );</div>
   <p class="slide"><code>capitalize :: String &srarr; String</code></p>
   </p>
@@ -237,10 +237,10 @@ Maybe.prototype.map = function(fn) {
   <h2>Composing with the Maybe Functor</h2>
   <div id="capId" class="code" name="code" mode="javascript" style="display:none;"
     >var capitalize = R.compose(
-    R.map(R.toUpperCase),         // Maybe(String) &srarr; Maybe(String)
-    R.map(R.prop('textContent')), // Maybe(Object) &srarr; Maybe(String)
-    Maybe,                        // Object &srarr; Maybe(Object)
-    document.getElementById       // String &srarr; DOMElement
+    R.map(R.toUpperCase),                        // Maybe(String) &srarr; Maybe(String)
+    R.map(R.prop('textContent')),                // Maybe(Object) &srarr; Maybe(String)
+    Maybe,                                       // Object &srarr; Maybe(Object)
+    document.getElementById.bind(document)       // String &srarr; DOMElement
 );</div>
   <p><code>capitalize :: String &srarr; Maybe(String)</code></p>
   <ul>
