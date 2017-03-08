@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created by diasvg.py -->
+<svg width="14.097cm" height="12.032cm" viewBox="8.020 4.135 22.117 16.167"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+<ellipse cx="20.113" cy="9.767" rx="1.953" ry="4.852" fill="#FFFFFF" stroke="none"  /><ellipse cx="20.113" cy="9.767" rx="1.953" ry="4.852" fill="none" stroke="#000000"  stroke-width="0.100" /><text x="20.195" y="7.597"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+i</text>
+<text x="20.195" y="9.122"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+j</text>
+<text x="20.195" y="10.648"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+k</text>
+<text x="20.195" y="12.173"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+l</text>
+<ellipse cx="10.493" cy="9.582" rx="1.953" ry="4.852" fill="#FFFFFF" stroke="none"  /><ellipse cx="10.493" cy="9.582" rx="1.953" ry="4.852" fill="none" stroke="#000000"  stroke-width="0.100" /><text x="10.252" y="6.759"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+d</text>
+<text x="10.252" y="8.209"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+e</text>
+<text x="10.252" y="9.445"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+f</text>
+<text x="10.252" y="11.108"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+g</text>
+<text x="10.455" y="12.557"  fill="#000000" text-anchor="middle" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+h</text>
+<text x="8.020" y="5.445"  fill="#000000" text-anchor="start" font-size="1.76" font-family="sans" font-style="normal" font-weight="400">
+Y</text>
+<text x="17.940" y="5.480"  fill="#000000" text-anchor="start" font-size="1.76" font-family="sans" font-style="normal" font-weight="400">
+Z</text>
+<line x1="11.000" y1="6.850" x2="19.639" y2="10.470" stroke="#000000" stroke-width="0.100" />
+<polygon fill="#000000" stroke="none" stroke-width="0.100" points="19.847,10.557 19.512,10.579 19.639,10.470 19.628,10.303 "/>
+<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="19.847,10.557 19.512,10.579 19.639,10.470 19.628,10.303 "/>
+<line x1="10.950" y1="10.900" x2="19.513" y2="10.900" stroke="#000000" stroke-width="0.100" />
+<polygon fill="#000000" stroke="none" stroke-width="0.100" points="19.738,10.900 19.438,11.050 19.513,10.900 19.438,10.750 "/>
+<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="19.738,10.900 19.438,11.050 19.513,10.900 19.438,10.750 "/>
+<line x1="11.050" y1="8.250" x2="19.614" y2="7.576" stroke="#000000" stroke-width="0.100" />
+<polygon fill="#000000" stroke="none" stroke-width="0.100" points="19.839,7.559 19.551,7.732 19.614,7.576 19.528,7.433 "/>
+<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="19.839,7.559 19.551,7.732 19.614,7.576 19.528,7.433 "/>
+<line x1="10.850" y1="9.350" x2="19.677" y2="11.955" stroke="#000000" stroke-width="0.100" />
+<polygon fill="#000000" stroke="none" stroke-width="0.100" points="19.893,12.018 19.563,12.077 19.677,11.955 19.647,11.790 "/>
+<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="19.893,12.018 19.563,12.077 19.677,11.955 19.647,11.790 "/>
+<line x1="10.950" y1="12.550" x2="19.613" y2="12.357" stroke="#000000" stroke-width="0.100" />
+<polygon fill="#000000" stroke="none" stroke-width="0.100" points="19.838,12.352 19.542,12.509 19.613,12.357 19.535,12.209 "/>
+<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="19.838,12.352 19.542,12.509 19.613,12.357 19.535,12.209 "/>
+<text x="12.950" y="15.900"  fill="#000000" text-anchor="start" font-size="1.41" font-family="sans" font-style="normal" font-weight="400">
+g : Y → Z</text>
+</svg>

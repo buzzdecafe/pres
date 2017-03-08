@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+
+	<title>Ramda.js</title>
+	
+	<!-- Required stylesheet -->
+	<link rel="stylesheet" href="core/deck.core.css">
+	
+	<!-- Extension CSS files go here. Remove or add as needed. -->
+	<link rel="stylesheet" href="extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="extensions/status/deck.status.css">
+	<link rel="stylesheet" href="extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="extensions/scale/deck.scale.css">
+
+  <!-- include code mirror default css and the theme you want. -->
+  <link rel="stylesheet" href="extensions/codemirror/deck.codemirror.css">
+  <link rel="stylesheet" href="extensions/codemirror/themes/default.css">
+
+	<!-- Style theme. More available in /themes/style/ or create your own. -->
+	<link rel="stylesheet" href="themes/style/mnml.css">
+	
+	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
+	<link rel="stylesheet" href="themes/transition/horizontal-slide.css">
+
+  <!-- Base codemiror code -->
+  <script src="extensions/codemirror/codemirror.js"></script>
+
+  <!-- Syntax highlighting Modes -->
+
+	<!-- Required Modernizr file -->
+	<script src="modernizr.custom.js"></script>
+  <script src="https://cdn.jsdelivr.net/ramda/0.23.0/ramda.min.js"></script>
+
+<style>
+.hot {
+  color: #f00
+}
+.portrait {
+  text-align: center;
+    float: right;
+}
+</style>
+</head>
+<body class="deck-container">
+
+<!-- Begin slides. Just make elements with a class of slide. -->
+<section class="slide">
+<h1>Ramda.js</h1>
+<p style="text-align: center"><em>Practical functional JavaScript</em></p>
+</section>
+
+<section class="slide">
+  <h2>Motivation: It's all about <em class="hot">function composition</em></h2>
+  <p><em>Function Composition</em> is the technique of chaining together functions to create a new function.</p>
+
+  <textarea id="example1" name="example1" class="code" mode="javascript" style="display: none;">// Simple composition
+const trim = str => str.replace(/^\s*|\s*$/g, '');
+const capitalize = str => str.toUpperCase();
+
+const convert = compose(trim, capitalize); // Look ma! New function!
+  </textarea>
+</section>
+
+<section class="slide">
+  <h2>Motivation: It's all about <em class="hot">function composition</em></h2>
+  <img src="img/f.svg" />
+  <img src="img/g.svg" />
+
+</section>
+
+<section class="slide">
+  <h2>Motivation: It's all about <em class="hot">function composition</em></h2>
+  <img src="img/fog.svg" />
+  <img src="img/h.svg" class="slide" />
+
+</section>
+
+<section class="slide">
+  <h2>Composition Example</h2>
+  <div>
+    <textarea id="f_fn" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">// f :: String -> [String]
+const f = R.split('');
+
+console.log("f('abc') ->", f('abc'));
+
+// g :: Object -> String
+const g = R.prop('key');
+
+//console.log("g({key: 'Alonzo Church'}) ->", g({key: 'Alonzo Church'}));
+
+// h :: Object -> [String]
+const h = R.compose(f, g); // same as R.compose(R.split(''), R.prop('key'))
+
+//console.log("h({key: 'abcde'}) ->", h({key: 'abcde'}));
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Currying</h2>
+  <figure class="portrait">
+    <img src="img/HaskellBCurry.jpg" />
+    <figcaption>Haskell B. Curry</figcaption>
+  </figure>
+
+  <p><em class="hot">Currying</em> is the technique of translating the evaluation of a function that takes multiple arguments (or a tuple of arguments) into evaluating a sequence of functions, each with a single argument.</p>
+
+  <div>
+    <textarea id="curry_explained_1" class="code" name="code" mode="javascript" style="display: none">// UNCURRIED:
+// mult :: (Number, Number) => Number
+const mult = (x, y) => x * y;
+
+mult(10, 3); //=> 30
+mult(10); //=> NaN
+
+
+// CURRIED:
+// cmult :: Number -> Number -> Number
+const cmult = x => y => x * y;
+
+const times10 = cmult(10); //=> a new Function from Number -> Number
+
+times10(3); //=> 30
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Currying in Ramda</h2>
+
+    <textarea id="R_curry" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const mult = (x, y) => x * y;
+const rcmult = R.curry(mult);
+
+console.log("You can call rcmult either way: ", rcmult(3)(10) === rcmult(3, 10));
+console.log("rcmult(3, 10) ->", rcmult(3, 10));
+console.log("rcmult(3)(10) ->", rcmult(3)(10));
+    </textarea>
+</section>
+
+<section class="slide">
+  <h2>Currying in Ramda: What is it good for?</h2>
+
+  <p>
+  Remember: It's all about <em class="hot">composition</em>.<p>
+  <p>
+  Currying enables us to reuse code by building new functions from simple parts.
+  </p>
+
+  <div class="slide">
+    <h3>Example: <code>R.prop :: String -> Object -> Any</code></h3>
+    <textarea id="R_curry_2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const getName = R.prop('name'); // new function Object -> Any
+const getAddr = R.prop('addr'); // new function Object -> Any
+const getState = R.prop('state'); // new function Object -> Any
+// etc.
+
+console.log("getState({addr: '123 Main St.', state: 'CT'}) ->", getState({addr: '123 Main St.', state: 'CT'}));
+    </textarea>
+  </div>
+
+</section>
+
+<section class="slide">
+  <h2>Currying in Ramda: What is it good for?</h2>
+    <p>The best strategy for maximizing this reuse is to pass the <em>arguments least likely to change</em> into the function first.</p>
+  <div class="slide">
+    <h3>Example: <code>R.where :: Object -> Object -> Bool</code></h3>
+
+    <p>
+    Takes a spec object and a test object; returns true if the test satisfies the spec. Each of the spec's own properties must be a predicate function. Each predicate is applied to the value of the corresponding property of the test object. where returns true if all the predicates return true, false otherwise.
+    </p>
+    <textarea id="R_curry_2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">// satisfiesInterface :: Object -> Bool
+const satisfiesInterface = R.where({
+  name: R.compose(R.equals('String'), R.type),
+  state: R.equals('CT'),
+  zip: R.compose(R.equals(5), R.length)
+});
+
+const goodOne = {
+  name: 'Rusty',
+  state: 'CT',
+  zip: '06357'
+};
+
+const badOne = {
+  state: 'CT',
+  zip: '06357'
+};
+
+console.log("satisfiesInterface(goodOne) ->", satisfiesInterface(goodOne));
+console.log("satisfiesInterface(badOne) ->", satisfiesInterface(badOne));
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Lists</h2>
+
+  <div>
+    <ul>
+      <li><code>R.map :: (a -> b) -> [a] -> [b]</code></li>
+      <li><code>R.filter :: (a -> Bool) -> [a] -> [a]</code></li>
+      <li><code>R.reduce :: (x -> a) -> x -> [a] -> x</code></li>
+      <li><code>R.chain :: (a -> [b]) -> [a] -> [b]</code></li>
+      <li><code>R.find :: (a -> Bool) -> [a] -> a</code></li>
+    </ul>
+  </div>
+
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>map</code></h2>
+
+  <textarea id="map" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">// h :: Object -> [String]
+const h = R.compose(R.split(''), R.prop('key'));
+
+const objs = [{key: "cow"}, {key: "moo"}, {key: "stampede"}];
+const result = R.map(h, objs);
+
+console.log(result);
+  </textarea>
+</section>
+
+
+
+
+
+
+<section class="slide">
+<h2>Final Thought</h2>
+
+<blockquote>Simplicity is hard work. But, there's a huge payoff. The person who has a genuinely simpler system - a system made out of genuinely simple parts, is going to be able to affect the greatest change with the least work. He's going to kick your ass. He's gonna spend more time simplifying things up front and in the long haul he's gonna wipe the plate with you because he'll have that ability to change things when you're struggling to push elephants around.
+  
+  <p>&mdash; Rich Hickey</p>
+</blockquote>
+
+<div>
+  <img src="img/push-elephant.jpg" />
+</div>
+</section>
+
+
+<!-- End slides. -->
+
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+	<datalist id="goto-datalist"></datalist>
+	<input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<!-- End extension snippets. -->
+
+
+<!-- Required JS files. -->
+<script src="jquery-1.7.2.min.js"></script>
+<script src="core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="core/deck.core.js"></script>
+<script src="extensions/hash/deck.hash.js"></script>
+<script src="extensions/menu/deck.menu.js"></script>
+<script src="extensions/goto/deck.goto.js"></script>
+<script src="extensions/status/deck.status.js"></script>
+<script src="extensions/navigation/deck.navigation.js"></script>
+<script src="extensions/scale/deck.scale.js"></script>
+
+<!-- include the base codemirror code. -->
+<script src="extensions/codemirror/codemirror.js"></script>
+
+<!-- javascript -->
+<script src="extensions/codemirror/mode/javascript/javascript.js"></script>
+
+<!-- Plugin code -->
+<script src="extensions/codemirror/deck.codemirror.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+	$(function() {
+		$.deck('.slide');
+	});
+</script>
+</body>
+</html>
