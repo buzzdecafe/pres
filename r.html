@@ -26,7 +26,7 @@
 	<link rel="stylesheet" href="themes/style/mnml.css">
 	
 	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
-	<link rel="stylesheet" href="themes/transition/horizontal-slide.css">
+	<link rel="stylesheet" href="themes/transition/fade.css">
 
   <!-- Base codemiror code -->
   <script src="extensions/codemirror/codemirror.js"></script>
@@ -53,18 +53,27 @@
 <section class="slide">
 <h1>Ramda.js</h1>
 <p style="text-align: center"><em>Practical functional JavaScript</em></p>
+<!--
+  <img src="img/ramdaFilled_200x235.png" />
+-->
 </section>
 
 <section class="slide">
   <h2>Motivation: It's all about <em class="hot">function composition</em></h2>
   <p><em>Function Composition</em> is the technique of chaining together functions to create a new function.</p>
 
+  <div>
+    <img src="img/function_machines_composed.png" />
+
+  </div>
+  <!--
   <textarea id="example1" name="example1" class="code" mode="javascript" style="display: none;">// Simple composition
 const trim = str => str.replace(/^\s*|\s*$/g, '');
 const capitalize = str => str.toUpperCase();
 
 const convert = compose(trim, capitalize); // Look ma! New function!
   </textarea>
+  -->
 </section>
 
 <section class="slide">
@@ -85,19 +94,76 @@ const convert = compose(trim, capitalize); // Look ma! New function!
   <h2>Composition Example</h2>
   <div>
     <textarea id="f_fn" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">// f :: String -> [String]
-const f = R.split('');
+const f = s => s.split('');
+
+// g :: Object -> String
+const g = obj => obj.key;
+
+// h :: Object -> [String]
+const h = obj => f(g(obj));
+
 
 console.log("f('abc') ->", f('abc'));
+console.log("g({key: 'Alonzo Church'}) ->", g({key: 'Alonzo Church'}));
+console.log("h({key: 'abcde'}) ->", h({key: 'abcde'}));
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Composition, Ramda-style</h2>
+  <div>
+    <textarea id="f_fn" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">// f :: String -> [String]
+const f = R.split('');
 
 // g :: Object -> String
 const g = R.prop('key');
 
-//console.log("g({key: 'Alonzo Church'}) ->", g({key: 'Alonzo Church'}));
+// h :: Object -> [String]
+const h = R.compose(f, g); // same as R.compose(R.split(''), R.prop('key'))
+
+
+console.log("f('abc') ->", f('abc'));
+console.log("g({key: 'Alonzo Church'}) ->", g({key: 'Alonzo Church'}));
+console.log("h({key: 'abcde'}) ->", h({key: 'abcde'}));
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>What are the differences?</h2>
+  <div>
+    <h3>Plain ol' JavaScript</h3>
+    <textarea id="f_fn" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">// f :: String -> [String]
+const f = s => s.split('');
+
+// g :: Object -> String
+const g = obj => obj.key;
+
+// h :: Object -> [String]
+const h = obj => f(g(obj));
+
+
+console.log("f('abc') ->", f('abc'));
+console.log("g({key: 'Alonzo Church'}) ->", g({key: 'Alonzo Church'}));
+console.log("h({key: 'abcde'}) ->", h({key: 'abcde'}));
+    </textarea>
+  </div>
+  <div>
+    <h3>Ramda-style</h3>
+    <textarea id="f_fn" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">// f :: String -> [String]
+const f = R.split('');
+
+// g :: Object -> String
+const g = R.prop('key');
 
 // h :: Object -> [String]
 const h = R.compose(f, g); // same as R.compose(R.split(''), R.prop('key'))
 
-//console.log("h({key: 'abcde'}) ->", h({key: 'abcde'}));
+
+console.log("f('abc') ->", f('abc'));
+console.log("g({key: 'Alonzo Church'}) ->", g({key: 'Alonzo Church'}));
+console.log("h({key: 'abcde'}) ->", h({key: 'abcde'}));
     </textarea>
   </div>
 </section>
@@ -144,10 +210,13 @@ console.log("rcmult(3)(10) ->", rcmult(3)(10));
 </section>
 
 <section class="slide">
-  <h2>Currying in Ramda: What is it good for?</h2>
+  <h2>Currying: What is it good for?</h2>
 
   <p>
   Remember: It's all about <em class="hot">composition</em>.<p>
+  <p>
+  Functions inside a composition take only one argument.
+  </p>
   <p>
   Currying enables us to reuse code by building new functions from simple parts.
   </p>
@@ -172,7 +241,7 @@ console.log("getState({addr: '123 Main St.', state: 'CT'}) ->", getState({addr: 
     <h3>Example: <code>R.where :: Object -> Object -> Bool</code></h3>
 
     <p>
-    Takes a spec object and a test object; returns true if the test satisfies the spec. Each of the spec's own properties must be a predicate function. Each predicate is applied to the value of the corresponding property of the test object. where returns true if all the predicates return true, false otherwise.
+    Takes a spec object and a test object; returns true if the test satisfies the spec. Each of the spec's own properties must be a predicate function. Each predicate is applied to the value of the corresponding property of the test object. <code>where</code> returns true if all the predicates return true, false otherwise.
     </p>
     <textarea id="R_curry_2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">// satisfiesInterface :: Object -> Bool
 const satisfiesInterface = R.where({
@@ -210,6 +279,19 @@ console.log("satisfiesInterface(badOne) ->", satisfiesInterface(badOne));
       <li><code>R.find :: (a -> Bool) -> [a] -> a</code></li>
     </ul>
   </div>
+
+</section>
+
+<section class="slide">
+  <h2>Lists</h2>
+
+  <ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
 
 </section>
 
