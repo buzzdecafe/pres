@@ -46,24 +46,16 @@
   top: 50%;
   left: 50%;
 }
-.example-code td {
-  width: 50%;
-  font-family: Courier;
+.halfsies {
+  float: left;
+  width: 49%;
 }
-.example-code td.indent2 {
-  padding-left: 24px;
+.halfsies:first-child {
+  border-right: 1px solid black;
 }
-.example-code td.indent4 {
-  padding-left: 48px;
-}
-.example-code td.indent6 {
-  padding-left: 72px;
-}
-.example-code td.indent8 {
-  padding-left: 96px;
-}
-.example-code td.indent10 {
-  padding-left: 120px;
+.procon {
+  text-align: center;
+  text-decoration: underline;
 }
 </style>
 </head>
@@ -135,14 +127,14 @@
 </section>
 
 <section class="slide">
-  <h2>Anaysis</h2>
+  <h2>Analysis</h2>
   <div>
     <img src="img/bad/bad_prefilter.png" />
   </div>
 </section>
 
 <section class="slide">
-  <h2>Anaysis</h2>
+  <h2>Analysis</h2>
   <div>
     <img src="img/bad/bad_filter.png" />
   </div>
@@ -185,7 +177,7 @@
     <pre>const isArray = R.is(Array);</pre>
   </div>
   <div class="slide">
-    <p>Make a function to filter the relatedIds that are Arrays:</p>
+    <p>Use that `isArray` function to create a new function in list context:</p>
     <pre>const getArrays = filter(isArray);</pre>
   </div>
 </section>
@@ -194,7 +186,7 @@
   <h2>Algebra</h2>
   <p>We have two filters back to back: <code>tplsWithIds</code> and <code>getArrays</code></p>
   <p><code>compose(filter(f), filter(g)) ~ filter(compose(f,  g))</code></p>
-  <p>In this case it is easiest to simply write a combined predicate:</p>
+  <p>In this case, it is easiest to simply write a combined predicate:</p>
   <pre>const hasIds = t =&gt; R.is(Array, t.questionConfig.relatedId);</pre> 
 </section>
 
@@ -214,20 +206,52 @@
 
 <section class="slide">
   <h2>Analysis</h2>
-  <p>Take the keys off the filtered object, get the `ids` array off each one, 
-  and concatenate them all.
-  </p>
+  <h3>Goal</h3>
+  <p>Decorate an object with the `relatedId`'s</p>
+  <div class="slide">
+    <h3>Approach</h3>
+    <p>
+      Take the keys of the filtered object, get the `relatedId` array of each one, 
+      and concatenate them all. Use the list of `ids` as keys in the object to decorate.
+    </p>
+  </div>
 
-<pre>const getIdArray = rs =&gt; t =&gt; rs[k].questionConfig.relatedId;</pre>
+  <div class="slide">
+    <h4>1. Take the keys of the filtered object, get the `ids` array of each one</h4>
+    <pre>const getIdArray = rs =&gt; k =&gt; rs[k].questionConfig.relatedId;</pre>
+  </div>
 
-<p>Use `chain` to concatenate the lists in one step:</p>
-<pre>const ids = R.chain(getIdArray);</pre>
+  <div class="slide">
+    <h4>2. Concatenate them all</h4>
+    <p>Use `chain` to concatenate the lists in one step:</p>
+    <pre>const ids = R.chain(getIdArray(rs), R.keys(rs));</pre>
+    <p>&hellip; where `rs` is the filtered object containing only keys with `relatedId` Arrays on it.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Analysis</h2>
+  <h3>Goal</h3>
+  <p>Decorate an object with the `relatedId`'s</p>
+
+  <h3>Approach</h3>
+    <p>
+      Take the keys of the filtered object, get the `relatedId` array of each one, 
+      and concatenate them all. Use the list of `ids` as keys in the object to decorate.
+    </p>
+  <div class="slide">
+    <h4>3. Use the list of `ids` as keys in the object to decorate.</h4>
+    <p>In other words, fold the `ids` list onto the object.</p>
+  </div>
 </section>
 
 <section class="slide">
   <h2>Analysis</h2>
   <h3>Write a fold function</h3>
   <p>&hellip; to reduce the filtered templates onto the `partOfMergedDatabinding`</p>
+  <p>Remember the signature of `reduce`: <code>((acc, x) -&gt; acc) -&gt; acc -&gt; xs</code></p>
+  <p>Write just the "folding" function, i.e. <code>((acc, x) -&gt; acc)</code></p>
+  <p>We already know the `acc`, it is `partOfMergedDatabinding`; and `xs` will be the list of `ids`</p>
   <div class="slide">
 <pre>const trueKeyify = (acc, k) => {
   acc[k] = true;
@@ -247,18 +271,53 @@ const trueKeyify = (acc, k) =&gt; {
   return acc;
 };
 
-const rs = filter(hasIds, templates);
-const ids = chain(getIdArray(rs), keys(rs));
-const result = reduce(trueKeyify, partOfMergedDatabinding, ids);
+const rs = R.filter(hasIds, templates);
+const ids = R.chain(getIdArray(rs), R.keys(rs));
+const result = R.reduce(trueKeyify, partOfMergedDatabinding, ids);
 </pre>  
 
 <div class="slide">
-  <a href="https://goo.gl/AKrgML" target="_new">Demo</a>
+  <h3 style="text-align: center"><a href="https://goo.gl/AKrgML" target="_new">DEMO</a></h3>
 </div>
 </section>
 
+<section class="slide">
+  <h2>Evaluation</h2>
+  <div>
+  <div class="halfsies">
+    <h3 class="procon">PRO</h3>
+    <ul>
+      <li class="slide">Simple</li>
+      <li class="slide">Testable</li>
+      <li class="slide">Concise</li>
+      <li class="slide">Algebraic</li>
+      <li class="slide">Composable</li>
+      <li class="slide">Unnested</li>
+      <li class="slide">Readable</li>
+      <li class="slide">Pattern-based</li>
+      <li class="slide">Stateless*</li>
+      <li class="slide">Immutable*</li>
+      <li class="slide">Referentially Transparent*</li>
+    </ul>
+  </div>
 
+  <div class="halfsies">
+    <h3 class="procon">CON</h3>
+    <ul>
+      <li class="slide">Unfamiliar</li>
+      <li class="slide">Unreadable</li>
+      <li class="slide">You are the type checker, compiler, interpreter, whatever. The language will not help you.</li>
+      <li class="slide hot">Requires developer discipline and agreement</li>
+      <li class="slide">Performance*</li>
+    </ul>
+  </div>
+  </div>
+</section>
 
+<section class="slide">
+  <h1>Questions &amp; Discussion</h1>
+
+</section>
 <!-- End slides. -->
 
 
