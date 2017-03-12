@@ -26,8 +26,8 @@
 	<link rel="stylesheet" href="themes/style/mnml.css">
 	
 	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
-	<link rel="stylesheet" href="themes/transition/fade.css">
-
+	<!--link rel="stylesheet" href="themes/transition/fade.css">
+-->
   <!-- Base codemiror code -->
   <script src="extensions/codemirror/codemirror.js"></script>
 
@@ -40,15 +40,30 @@
 .hot {
   color: #f00
 }
-.portrait {
-  text-align: center;
-    float: right;
-}
 .js-good-bad {
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 25%);
   position: absolute;
   top: 50%;
   left: 50%;
+}
+.example-code td {
+  width: 50%;
+  font-family: Courier;
+}
+.example-code td.indent2 {
+  padding-left: 24px;
+}
+.example-code td.indent4 {
+  padding-left: 48px;
+}
+.example-code td.indent6 {
+  padding-left: 72px;
+}
+.example-code td.indent8 {
+  padding-left: 96px;
+}
+.example-code td.indent10 {
+  padding-left: 120px;
 }
 </style>
 </head>
@@ -65,9 +80,182 @@
 </section>
 
 <section class="slide">
-
+  <h2>Bad Example</h2>
+  <div>
+    <img src="img/bad/bad_orig.png" />
+  </div>
 </section>
 
+<section class="slide">
+  <h2>Bad Example</h2>
+  <div>
+    <img src="img/bad/bad_iterate.png" />
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Bad Example</h2>
+  <div>
+    <img src="img/bad/bad_prop.png" />
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Bad Example</h2>
+  <div>
+    <img src="img/bad/bad_array.png" />
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Bad Example</h2>
+  <div>
+    <img src="img/bad/bad_decorate.png" />
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Bad Example</h2>
+  <div>
+    <img src="img/bad/bad_orig.png" />
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Analysis</h2>
+  <h3>What patterns can we use?</h2>
+  <p>We're doing some iteration, and that virtually always falls into one of these:</p>
+  <ul>
+     <li class="slide">map?</li>
+     <li class="slide">filter?</li>
+     <li class="slide">reduce? (fold)</li>
+     <li class="slide">find?</li>
+     <li class="slide">chain?</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Anaysis</h2>
+  <div>
+    <img src="img/bad/bad_prefilter.png" />
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Anaysis</h2>
+  <div>
+    <img src="img/bad/bad_filter.png" />
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Analysis</h2>
+  <h3>Write a predicate to filter <code>templates</code></h3>
+  <div class="slide">
+    <pre>const hasIds = t =&gt; !!t.questionConfig.relatedIds;</pre>
+  </div>
+  <div class="slide">
+    <p>Now we can lift that function into list context, so we get a function over a list of templates:</p>
+    <pre>const tplsWithIds = R.filter(hasIds);</pre>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Analysis</h2>
+  <div>
+    <img src="img/bad/bad_prefilter2.png" />
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Analysis</h2>
+  <div>
+    <img src="img/bad/bad_filter2.png" />
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Analysis</h2>
+  <h3>Write a predicate to filter again</h3>
+  <div class="slide">
+    <pre>const isArray = a =&gt; R.is(Array, a);</pre>
+  </div>
+  <div class="slide">
+    <p>... by eta conversion, you get:</p>
+    <pre>const isArray = R.is(Array);</pre>
+  </div>
+  <div class="slide">
+    <p>Make a function to filter the relatedIds that are Arrays:</p>
+    <pre>const getArrays = filter(isArray);</pre>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Algebra</h2>
+  <p>We have two filters back to back: <code>tplsWithIds</code> and <code>getArrays</code></p>
+  <p><code>compose(filter(f), filter(g)) ~ filter(compose(f,  g))</code></p>
+  <p>In this case it is easiest to simply write a combined predicate:</p>
+  <pre>const hasIds = t =&gt; R.is(Array, t.questionConfig.relatedId);</pre> 
+</section>
+
+<section class="slide">
+  <h2>Analysis</h2>
+  <div>
+    <img src="img/bad/bad_prefold.png" />
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Analysis</h2>
+  <div>
+    <img src="img/bad/bad_fold.png" />
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Analysis</h2>
+  <p>Take the keys off the filtered object, get the `ids` array off each one, 
+  and concatenate them all.
+  </p>
+
+<pre>const getIdArray = rs =&gt; t =&gt; rs[k].questionConfig.relatedId;</pre>
+
+<p>Use `chain` to concatenate the lists in one step:</p>
+<pre>const ids = R.chain(getIdArray);</pre>
+</section>
+
+<section class="slide">
+  <h2>Analysis</h2>
+  <h3>Write a fold function</h3>
+  <p>&hellip; to reduce the filtered templates onto the `partOfMergedDatabinding`</p>
+  <div class="slide">
+<pre>const trueKeyify = (acc, k) => {
+  acc[k] = true;
+  return acc;
+}</pre>
+  </div>
+</section>     
+
+<section class="slide">
+  <h2>Rewrite</h2>
+
+<pre>
+const hasIds = t =&gt; R.is(Array, t.questionConfig.relatedId);
+const getIdArray = rs =&gt; k =&gt; rs[k].questionConfig.relatedId;
+const trueKeyify = (acc, k) =&gt; {
+  acc[k] = true;
+  return acc;
+};
+
+const rs = filter(hasIds, templates);
+const ids = chain(getIdArray(rs), keys(rs));
+const result = reduce(trueKeyify, partOfMergedDatabinding, ids);
+</pre>  
+</section>
+
+<section class="slide">
+
+</section>
 
 
 <!-- End slides. -->
