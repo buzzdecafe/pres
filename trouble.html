@@ -57,6 +57,17 @@
   text-align: center;
   text-decoration: underline;
 }
+.patterns {
+  width: 84%;
+  margin: auto;
+  text-align: center;
+}
+.patterns td {
+  padding: 6px;
+}
+.patterns tr:nth-child(odd) {
+  background-color: #eef;
+}
 </style>
 </head>
 <body class="deck-container">
@@ -72,42 +83,42 @@
 </section>
 
 <section class="slide">
-  <h2>Bad Example</h2>
+  <h2>Imperative Example</h2>
   <div>
     <img src="img/bad/bad_orig.png" />
   </div>
 </section>
 
 <section class="slide">
-  <h2>Bad Example</h2>
+  <h2>Imperative Example</h2>
   <div>
     <img src="img/bad/bad_iterate.png" />
   </div>
 </section>
 
 <section class="slide">
-  <h2>Bad Example</h2>
+  <h2>Imperative Example</h2>
   <div>
     <img src="img/bad/bad_prop.png" />
   </div>
 </section>
 
 <section class="slide">
-  <h2>Bad Example</h2>
+  <h2>Imperative Example</h2>
   <div>
     <img src="img/bad/bad_array.png" />
   </div>
 </section>
 
 <section class="slide">
-  <h2>Bad Example</h2>
+  <h2>Imperative Example</h2>
   <div>
     <img src="img/bad/bad_decorate.png" />
   </div>
 </section>
 
 <section class="slide">
-  <h2>Bad Example</h2>
+  <h2>Imperative Example</h2>
   <div>
     <img src="img/bad/bad_orig.png" />
   </div>
@@ -124,6 +135,49 @@
      <li class="slide">find?</li>
      <li class="slide">chain?</li>
   </ul>
+</section>
+
+<section class="slide">
+  <h2>Recognizing Patterns</h2>
+
+  <table class="patterns">
+    <tr>
+      <th>Pattern</th>
+      <th>In</th>
+      <th>Function</th>
+      <th>Out</th>
+    </tr>
+    <tr>
+      <td>map</td>
+      <td><code>[&clubs; &clubs; &clubs;]</code></td>
+      <td><code>&clubs; &rarr; &hearts;</code></td>
+      <td><code>[&hearts; &hearts; &hearts;]</code></td>
+    </tr>
+    <tr>
+      <td>chain</td>
+      <td>[&clubs; &clubs; &clubs;]</td>
+      <td>&clubs; &rarr; [&spades;]</td>
+      <td>[&spades; &spades; &spades; ...]</td>
+    </tr>
+    <tr>
+      <td>filter</td>
+      <td><code>[&clubs; &clubs; &clubs;]</code></td>
+      <td><code>&clubs; &rarr; Boolean</code></td>
+      <td><code>[&clubs; &clubs;]</code></td>
+    </tr>
+    <tr>
+      <td>find</td>
+      <td><code>[&clubs; &clubs; &clubs;]</code></td>
+      <td><code>&clubs; &rarr; Boolean</code></td>
+      <td><code>&clubs;</code></td>
+    </tr>
+    <tr>
+      <td>reduce</td>
+      <td><code>[&clubs; &clubs; &clubs;]</code></td>
+      <td>(&diams;, &clubs;) &rarr; &diams;</td>
+      <td>&diams;</td>
+    </tr>
+  </table>
 </section>
 
 <section class="slide">
@@ -208,13 +262,11 @@
   <h2>Analysis</h2>
   <h3>Goal</h3>
   <p>Decorate an object with the `relatedId`'s</p>
-  <div class="slide">
-    <h3>Approach</h3>
-    <p>
-      Take the keys of the filtered object, get the `relatedId` array of each one, 
-      and concatenate them all. Use the list of `ids` as keys in the object to decorate.
-    </p>
-  </div>
+  <h3>Approach</h3>
+  <p>
+    Take the keys of the filtered object, get the `relatedId` array of each one, 
+    and concatenate them all. Use the list of `ids` as keys in the object to decorate.
+  </p>
 
   <div class="slide">
     <h4>1. Take the keys of the filtered object, get the `ids` array of each one</h4>
@@ -227,18 +279,6 @@
     <pre>const ids = R.chain(getIdArray(rs), R.keys(rs));</pre>
     <p>&hellip; where `rs` is the filtered object containing only keys with `relatedId` Arrays on it.</p>
   </div>
-</section>
-
-<section class="slide">
-  <h2>Analysis</h2>
-  <h3>Goal</h3>
-  <p>Decorate an object with the `relatedId`'s</p>
-
-  <h3>Approach</h3>
-    <p>
-      Take the keys of the filtered object, get the `relatedId` array of each one, 
-      and concatenate them all. Use the list of `ids` as keys in the object to decorate.
-    </p>
   <div class="slide">
     <h4>3. Use the list of `ids` as keys in the object to decorate.</h4>
     <p>In other words, fold the `ids` list onto the object.</p>
