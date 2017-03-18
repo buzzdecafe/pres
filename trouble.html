@@ -239,7 +239,7 @@
 <section class="slide">
   <h2>Algebra</h2>
   <p>We have two filters back to back: <code>tplsWithIds</code> and <code>getArrays</code></p>
-  <p><code>compose(filter(f), filter(g)) ~ filter(compose(f,  g))</code></p>
+  <p><code>compose(filter(f), filter(g)) ~ filter(x =&gt; f(x) &amp;&amp;  g(x)))</code></p>
   <p>In this case, it is easiest to simply write a combined predicate:</p>
   <pre>const hasIds = t =&gt; R.is(Array, t.questionConfig.relatedId);</pre> 
 </section>

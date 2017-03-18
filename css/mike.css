@@ -1,0 +1,42 @@
+.hot {
+  color: #f00
+}
+.portrait {
+  text-align: center;
+  float: right;
+}
+.oops {
+  text-decoration: line-through;
+}
+
+.js-good-bad {
+  transform: translate(-50%, 25%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.halfsies {
+  float: left;
+  width: 49%;
+}
+.halfsies:first-child {
+  border-right: 1px solid black;
+}
+.procon {
+  text-align: center;
+  text-decoration: underline;
+}
+.patterns {
+  width: 84%;
+  margin: auto;
+  text-align: center;
+}
+.patterns td {
+  padding: 6px;
+}
+.patterns tr:nth-child(odd) {
+  background-color: #eef;
+}
+.showme {
+  opacity: 1.0 !important;
+}

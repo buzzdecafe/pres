@@ -37,15 +37,9 @@
 	<script src="modernizr.custom.js"></script>
   <script src="https://cdn.jsdelivr.net/ramda/0.23.0/ramda.min.js"></script>
 
-<style>
-.hot {
-  color: #f00
-}
-.portrait {
-  text-align: center;
-  float: right;
-}
-</style>
+	<!-- My custom styles -->
+	<link rel="stylesheet" href="css/mike.css">
+
 </head>
 <body class="deck-container">
 
@@ -212,14 +206,9 @@ console.log("rcmult(3)(10) ->", rcmult(3)(10));
 <section class="slide">
   <h2>Currying: What is it good for?</h2>
 
-  <p>
-  Remember: It's all about <em class="hot">composition</em>.<p>
-  <p>
-  Functions inside a composition take only one argument.
-  </p>
-  <p>
-  Currying enables us to reuse code by building new functions from simple parts.
-  </p>
+  <p>Remember: It's all about <em class="hot">composition</em>.<p>
+  <p>Functions inside a composition take only one argument.</p>
+  <p>Currying enables us to reuse code by building new functions from simple parts.</p>
 
   <div class="slide">
     <h3>Example: <code>R.prop :: String -> Object -> Any</code></h3>
@@ -272,46 +261,266 @@ console.log("satisfiesInterface(badOne) ->", satisfiesInterface(badOne));
 
   <div>
     <ul>
-      <li><code>R.map :: (a -> b) -> [a] -> [b]</code></li>
-      <li><code>R.filter :: (a -> Bool) -> [a] -> [a]</code></li>
-      <li><code>R.reduce :: (x -> a) -> x -> [a] -> x</code></li>
-      <li><code>R.chain :: (a -> [b]) -> [a] -> [b]</code></li>
-      <li><code>R.find :: (a -> Bool) -> [a] -> a</code></li>
+      <li><code>map</code></li>
+      <li><code>filter</code></li>
+      <li><code>reduce</code></li>
+      <li><code>chain</code></li>
+      <li><code>find</code></li>
+    </ul>
+  </div>
+
+  <p>That's pretty much what you'll need. Any questions?</p>
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>map</code></h2>
+
+  <h3>Definition</h3>
+  <p><code>R.map(f, xs)</code> creates a new list by applying the function <code>f</code> to every element in the list <code>xs</code></p> 
+
+
+  <div class="slide showme">
+    <h3>Pattern</h3>
+    <table class="patterns">
+      <tr>
+        <th></th>
+        <th>In</th>
+        <th>Function</th>
+        <th>Out</th>
+      </tr>
+      <tr>
+        <td>map</td>
+        <td><code>[&clubs; &clubs; &clubs;]</code></td>
+        <td><code>&clubs; &rarr; &hearts;</code></td>
+        <td><code>[&hearts; &hearts; &hearts;]</code></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="slide">
+    <h3>When to use it</h3>
+    <ul>
+      <li>I have a function from &clubs; to &hearts;</li>
+      <li>But instead of a &clubs;, I get a list of &clubs;, like [&clubs; &clubs; &clubs;].</li>
+      <li>I want to apply my &clubs; &rarr; &hearts; function to all the &clubs; in the list and get a new list of &hearts;, i.e. [&hearts; &hearts; &hearts;]</li>
+      <li>In other words, I want to <em>map the function <code>f</code> over the list <code>xs</code></em></li> 
+      <li>In <em>other</em> other words, I want to <em>lift</em> the function &clubs; &rarr; &hearts; into list context. (How is that for code reuse?)</li>
+    </ul>
+    <p>Note that <code>map</code> can be for more than just lists. We'll get back to that.</p>
+  </div>
+
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>map</code></h2>
+  <div>
+    <h3>Example #1: Increment all items in a list</h3>
+    <textarea id="map1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const inc = n => n + 1;
+const ns = [1, 2, 3];
+
+const result = R.map(inc, ns);
+
+console.log(result);
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <h3>Example #2: Map elements to another type</h3>
+    <textarea id="map2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [65, 66, 67];
+const result = R.map(String.fromCharCode, ns);
+
+console.log(result);
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>map</code></h2>
+
+  <div>
+    <h4>Identity Law</h4>
+    <p><code>map id = id</code></p>
+    <textarea id="map_id_law" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const id = x => x;
+const mapId = R.map(id);
+
+console.log(mapId([1, 2, 3]), "equals", id([1, 2, 3]));
+    </textarea>
+  </div>
+
+  <div>
+    <h4>Composition Law</h4>
+    <p><code>compose(map(f), map(g)) = map(compose(f, g))</code></p>
+    <textarea id="map_compose_law" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+const g = n => n + 1;
+const ns = [65, 66, 67];
+
+console.log(R.compose(R.map(f), R.map(g))(ns), "equals", R.map(R.compose(f, g), (ns)));
+    </textarea>
+  </div>
+
+
+</section>
+
+
+<section class="slide">
+  <h2>Lists: <code>filter</code></h2>
+
+  <h3>Definition</h3>
+  <p><code>R.filter(f, xs)</code> creates a new list by applying a predicate <code>f</code> to the list <code>xs</code>, and returns only the elements that satisfy the predicate.</p> 
+
+
+  <div class="slide showme">
+    <h3>Pattern</h3>
+    <table class="patterns">
+      <tr>
+        <th></th>
+        <th>In</th>
+        <th>Function</th>
+        <th>Out</th>
+      </tr>
+      <tr>
+        <td>filter</td>
+        <td><code>[&clubs; &clubs; &clubs;]</code></td>
+        <td><code>&clubs; &rarr; Boolean</code></td>
+        <td><code>[&clubs; &hellip;]</code></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="slide">
+    <h3>When to use it</h3>
+    <ul>
+      <li>I want to select only certain elements of a list.</li> 
+      <li>I have a function from &clubs; to Boolean that describes the elements I want.</li>
     </ul>
   </div>
 
 </section>
 
 <section class="slide">
-  <h2>Lists</h2>
+  <h2>Lists: <code>filter</code></h2>
+  
+  <h3><code>filter</code> rules: Analogous to SELECT</h3>
 
-  <ul>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-  </ul>
+  <div>
+    <p><code>(filter f) . (filter g) = filter (\x -&gt; (f x) &amp;&amp; (g x))</code></p>
+    <textarea id="filter_algebra" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [7, 8, 9, 10, 11, 12, 13, 14];
+const gt10 = x => x > 10;
+const even = x => x % 2 === 0;
+
+console.log(R.compose(R.filter(gt10), R.filter(even))(ns), "equals", R.filter(x => gt10(x) && even(x))(ns));
+    </textarea>
+
+  </div>
+
+  <div>
+    <p><code>(filter f) . (filter g) = (filter g) . (filter f)</code></p>
+    <textarea id="filter_algebra" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [7, 8, 9, 10, 11, 12, 13, 14];
+const gt10 = x => x > 10;
+const even = x => x % 2 === 0;
+
+console.log(R.compose(R.filter(gt10), R.filter(even))(ns), "equals", R.compose(R.filter(even), R.filter(gt10))(ns));
+    </textarea>
+  </div>
+
+</section>
+
+
+<section class="slide">
+  <h2>Lists: <code>reduce</code></h2>
 
 </section>
 
 <section class="slide">
-  <h2>Lists: <code>map</code></h2>
+  <h2>Lists: <code>map, filter, reduce</code></h2>
 
-  <textarea id="map" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">// h :: Object -> [String]
-const h = R.compose(R.split(''), R.prop('key'));
+  <p>You can stop here and probably be perfectly happy and productive.</p>
+</section>
 
-const objs = [{key: "cow"}, {key: "moo"}, {key: "stampede"}];
-const result = R.map(h, objs);
+<section class="slide">
+  <h2>Lists: <code>chain</code></h2>
 
-console.log(result);
-  </textarea>
 </section>
 
 
+<section class="slide">
+  <h2>Lists: <code>find</code></h2>
+
+  <p>There is something <em>different</em> about <code>find</code> &hellip;</p>
+</section>
 
 
+<section class="slide">
+  <h2>Lists & Composition</h2>
 
+  <p>How would you write a function to get the sum of a 2D matrix? For example,
+  given a matrix <code>[[1, 2], [3, 4]]</code>, your function should return <code>10</code>
+  </p>
+
+  <div>
+    <textarea id="mxSum2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const mx = [
+  [2, 34, 1, 17],
+  [5, 9, 11, 10],
+  [21, 11, 1, 3],
+  [44, 15, 8, 12]
+];
+const mxSum2 = mx => {
+  // return the sum of the matrix
+}
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Lists & Composition</h2>
+
+  <p>2D matrix sum</p>
+
+  <div>
+    <textarea id="mxSum2_solution" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const mx = [
+  [2, 34, 1, 17],
+  [5, 9, 11, 10],
+  [21, 11, 1, 3],
+  [44, 15, 8, 12]
+];
+
+// 1. start with a helper that adds two numbers
+const add = (x, y) => x + y;
+
+// 2. another helper to fold `add` over a list
+const sum = R.reduce(add, 0);
+
+// 3. Compose
+const mxSum2 = R.compose(sum, R.map(sum)); 
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Lists & Composition</h2>
+
+  <p>That was fun! Now let's write a function for a 3D matrix.
+  </p>
+
+  <div class="slide">
+    <textarea id="mxSum3_solution" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">
+const mxSum3 = R.compose(sum, R.map(mxSum2)); 
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <textarea id="mxSum4_solution" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">
+const mxSum4 = R.compose(sum, R.map(mxSum3)); 
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <p> &hellip; and so on. </p>
+    <p>This is giving me an idea &hellip;</p>
+
+
+  </div>
+</section>
 
 <section class="slide">
 <h2>Final Thought</h2>
