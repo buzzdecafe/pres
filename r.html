@@ -474,7 +474,7 @@ const mxSum2 = mx => {
 <section class="slide">
   <h2>Lists & Composition</h2>
 
-  <p>2D matrix sum</p>
+  <p>Here's a nice way to do it:</p>
 
   <div>
     <textarea id="mxSum2_solution" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const mx = [
@@ -492,6 +492,8 @@ const sum = R.reduce(add, 0);
 
 // 3. Compose
 const mxSum2 = R.compose(sum, R.map(sum)); 
+
+console.log("mxSum2(mx) equals", mxSum2(mx));
     </textarea>
   </div>
 </section>
@@ -508,6 +510,7 @@ const mxSum3 = R.compose(sum, R.map(mxSum2));
     </textarea>
   </div>
 
+  <p class="slide">How about 4D?</p>
   <div class="slide">
     <textarea id="mxSum4_solution" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">
 const mxSum4 = R.compose(sum, R.map(mxSum3)); 
@@ -521,6 +524,14 @@ const mxSum4 = R.compose(sum, R.map(mxSum3));
 
   </div>
 </section>
+
+<section class="slide">
+  <h2>Lists & Composition</h2>
+
+  <p>Let's write a function for a <em>N</em>-dimensional matrix.</p>
+  <p>What pattern is would that be?</p>
+</section>
+
 
 <section class="slide">
 <h2>Final Thought</h2>
