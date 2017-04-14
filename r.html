@@ -308,7 +308,6 @@ console.log("satisfiesInterface(badOne) ->", satisfiesInterface(badOne));
     </ul>
     <p>Note that <code>map</code> can be for more than just lists. We'll get back to that.</p>
   </div>
-
 </section>
 
 <section class="slide">
@@ -326,7 +325,7 @@ console.log(result);
 
   <div class="slide">
     <h3>Example #2: Map elements to another type</h3>
-    <textarea id="map2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [65, 66, 67];
+    <textarea id="map2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [114, 97, 109, 100, 97];
 const result = R.map(String.fromCharCode, ns);
 
 console.log(result);
@@ -336,6 +335,87 @@ console.log(result);
 
 <section class="slide">
   <h2>Lists: <code>map</code></h2>
+
+  <h3>Example #2: Comparison</h3>
+  <div>
+    <textarea id="tomap1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">var i, upper, out = [];
+var xs = ['a', 'b', 'c', 'd', 'e'];
+for (i = 0; i < xs.length; i++) {
+  upper = xs[i].toUpperCase();
+  out.push(upper)
+}
+console.log(out);
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <textarea id="tomap2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">var xs = ['a', 'b', 'c', 'd', 'e'];
+const out = R.map(R.toUpper, xs);
+console.log(out);
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>map</code></h2>
+
+  <p>So what is the difference?
+  It is all about <em class="hot">composition</em>.</p>
+
+  <p>Suppose we need to daisy-chain these three transformations together:</p>
+  <ul>
+    <li>Increment a list of numbers</li>
+    <li>Change to string by char code</li>
+    <li>Convert to upper case</li>
+  </ul>
+
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>map</code></h2>
+  <h3>First try</h3>
+  <div>
+    <textarea id="mapcomp" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [113, 96, 108, 99, 96];
+const allTheThings = R.compose(
+  R.map(R.toUpper),
+  R.map(String.fromCharCode),
+  R.map(R.inc)
+);
+console.log(allTheThings(xs));
+    </textarea>
+  </div>
+
+  <p class="slide">We can do better than this.</p>
+  <div class="slide">
+    <h3>Second try</h3>
+    <textarea id="mapcomp2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [113, 96, 108, 99, 96];
+const allTheThings = R.map(
+  R.compose(R.toUpper, String.fromCharCode, R.inc)
+);
+console.log(allTheThings(xs));
+    </textarea>
+  </div>
+
+  <p class="slide">That's better! But we can pull out that composed function; maybe we can reuse it elsewhere.</p>
+  <div class="slide">
+    <h3>Third try</h3>
+    <textarea id="mapcomp3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [113, 96, 108, 99, 96];
+const theThing = R.compose(R.toUpper, String.fromCharCode, R.inc); // naming things is hard
+const allTheThings = R.map(theThing);
+console.log(allTheThings(xs));
+    </textarea>
+  </div>
+</section>
+
+
+<section class="slide">
+  <h2>Lists: <code>map</code></h2>
+  <p>We can do these rewrites <em>confidently</em> because <code>map</code> must obey <em class="hot">laws</em></p>
+</section>
+
+
+<section class="slide">
+  <h2>Lists: <code>map</code> Laws</h2>
 
   <div>
     <h4>Identity Law</h4>
@@ -519,7 +599,6 @@ const mxSum4 = R.compose(sum, R.map(mxSum3));
 
   <div class="slide">
     <p> &hellip; and so on. </p>
-    <p>This is giving me an idea &hellip;</p>
 
 
   </div>
