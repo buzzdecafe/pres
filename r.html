@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=1024, user-scalable=no">
 
-	<title>Ramda.js</title>
+	<title>Zero to Ramda</title>
 	
 	<!-- Required stylesheet -->
 	<link rel="stylesheet" href="core/deck.core.css">
@@ -45,7 +45,7 @@
 
 <!-- Begin slides. Just make elements with a class of slide. -->
 <section class="slide">
-<h1 class="over">Ramda.js</h1>
+<h1 class="over">Zero to Ramda</h1>
 <div>
   <p style="text-align: center"><em>Practical functional JavaScript</em></p>
   <img src="img/ramdaFilled_200x235.png" />
@@ -306,7 +306,7 @@ console.log("satisfiesInterface(badOne) ->", satisfiesInterface(badOne));
       <li>In other words, I want to <em>map the function <code>f</code> over the list <code>xs</code></em></li> 
       <li>In <em>other</em> other words, I want to <em>lift</em> the function &clubs; &rarr; &hearts; into list context. (How is that for code reuse?)</li>
     </ul>
-    <p>Note that <code>map</code> can be for more than just lists. We'll get back to that.</p>
+    <p>Note that <code>map</code> can be for more than just lists. We'll get back to that idea later.</p>
   </div>
 </section>
 
@@ -411,6 +411,11 @@ console.log(allTheThings(xs));
 <section class="slide">
   <h2>Lists: <code>map</code></h2>
   <p>We can do these rewrites <em>confidently</em> because <code>map</code> must obey <em class="hot">laws</em></p>
+
+  <figure>
+    <img src="img/functor-laws.jpg" />
+  </figure>
+  
 </section>
 
 
@@ -441,10 +446,27 @@ console.log(R.compose(R.map(f), R.map(g))(ns), "equals", R.map(R.compose(f, g), 
 
 </section>
 
+<section class="slide">
+  <h2>Lists: <code>map</code> Workshop</h2>
+
+  <h3>Rewrite these examples as maps</h3>
+
+  <div><p>#1</p>
+    <textarea id="map_example1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+    </textarea>
+  </div>
+  <div><p>#2</p>
+    <textarea id="map_example2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+    </textarea>
+  </div>
+  <div><p>#3</p>
+    <textarea id="map_example3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+    </textarea>
+  </div>
+</section>
 
 <section class="slide">
   <h2>Lists: <code>filter</code></h2>
-
   <h3>Definition</h3>
   <p><code>R.filter(f, xs)</code> creates a new list by applying a predicate <code>f</code> to the list <code>xs</code>, and returns only the elements that satisfy the predicate.</p> 
 
@@ -479,30 +501,171 @@ console.log(R.compose(R.map(f), R.map(g))(ns), "equals", R.map(R.compose(f, g), 
 
 <section class="slide">
   <h2>Lists: <code>filter</code></h2>
-  
-  <h3><code>filter</code> rules: Analogous to SELECT</h3>
-
   <div>
-    <p><code>(filter f) . (filter g) = filter (\x -&gt; (f x) &amp;&amp; (g x))</code></p>
-    <textarea id="filter_algebra" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [7, 8, 9, 10, 11, 12, 13, 14];
-const gt10 = x => x > 10;
-const even = x => x % 2 === 0;
+    <h3>Example #1: Select numbers less than 10</h3>
+    <textarea id="filter1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const lt10 = n => n < 10;
+const ns = [1, 10, 2, 20, 3, 30];
 
-console.log(R.compose(R.filter(gt10), R.filter(even))(ns), "equals", R.filter(x => gt10(x) && even(x))(ns));
-    </textarea>
+const result = R.filter(lt10, ns);
 
-  </div>
-
-  <div>
-    <p><code>(filter f) . (filter g) = (filter g) . (filter f)</code></p>
-    <textarea id="filter_algebra" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [7, 8, 9, 10, 11, 12, 13, 14];
-const gt10 = x => x > 10;
-const even = x => x % 2 === 0;
-
-console.log(R.compose(R.filter(gt10), R.filter(even))(ns), "equals", R.compose(R.filter(even), R.filter(gt10))(ns));
+console.log(result);
     </textarea>
   </div>
 
+  <div class="slide">
+    <h3>Example #2: Return strings less than 5 characters long</h3>
+    <textarea id="filter2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = ["this", "certainly", "is", "still", "acceptably", "good"];
+const result = R.filter(x => x.length < 5, ns);
+
+console.log(result);
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>filter</code></h2>
+
+  <h3>Example #3: Comparison</h3>
+  <div>
+    <textarea id="tofilter3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [1, 100, 2, 303, 11, 12, 4, 22, 0];
+var i = 0, out = [];
+for (i = 0; i < ns.length; i++) {
+  if (ns[i] % 2 === 0) {
+      out.push(ns[i]);
+    }
+  }
+}
+console.log(out);
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <textarea id="tofilter3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [1, 100, 2, 303, 11, 12, 4, 22, 0];
+var out = R.filter(x => x % 2 === 0, ns);
+console.log(out);
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>filter</code></h2>
+
+  <p>It is all about <em class="hot">composition</em>.</p>
+
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>filter</code></h2>
+  <h3>You can rewrite this:</h3>
+  <div>
+    <textarea id="filtercomp" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [-20, 113, 96, -999, 108, 0, 99, -2, -15, 96];
+const even x = x => x % 2 === 0;
+const positive = x => x > 0;
+const positiveEvens = R.compose(
+  R.filter(even),
+  R.filter(positive)
+);
+console.log(positiveEvens(xs));
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <h3>... like this:</h3>
+    <textarea id="filtercomp2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [113, 96, 108, 99, 96];
+const even x = x => x % 2 === 0;
+const positive = x => x > 0;
+const positiveEvens = R.filter(
+  R.both(positive, even)
+);
+console.log(positiveEvens(xs));
+    </textarea>
+  </div>
+
+</section>
+
+
+<section class="slide">
+  <h2>Lists: <code>filter</code></h2>
+  <p>Filter laws are a trickier matter -- let's table that. Nonetheless:</p>
+  <p>We can do these rewrites <em>confidently on lists</em> because <code>filter</code> on lists 
+  has some well-defined algebraic rules.</p>
+</section>
+
+
+<section class="slide">
+  <h2>Lists: <code>filter</code> algebra</h2>
+
+  <div>
+    <code>filter(T, xs) = xs</code>
+    <textarea id="filter_alg_1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const T = x => true;
+const xs = [1, 2, 3];
+
+console.log(R.filter(T, xs), "equals", xs);
+    </textarea>
+  </div>
+
+  <div>
+    <code>filter(F, xs) = []</code>
+    <textarea id="filter_alg_2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const F = x => false;
+const xs = [1, 2, 3];
+
+console.log(R.filter(F, xs), "equals", []);
+    </textarea>
+  </div>
+
+  <div>
+    <code>filter(f, []) = []</code>
+    <textarea id="filter_alg_2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [1, 2, 3];
+const F = x => false;
+const T = x => true;
+
+console.log(R.filter(F, []), "equals", R.filter(T, []));
+    </textarea>
+  </div>
+
+  <div>
+    <h3>Conjunction</h3>
+    <code>filter(f, filter(g, xs)) = filter(x => f(x) && g(x), xs)</code>
+    <textarea id="filter_alg_3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const even = x => x % 2 === 0;
+const positive = x => x > 0;
+const xs = [1, 2, 3];
+
+console.log(R.filter(even, (R.filter(positive, xs)), "equals", R.filter(R.both(even, positive), xs);
+    </textarea>
+  </div>
+
+  <div>
+    <h3>Commutativity</h3>
+    <code>filter(f, filter(g, xs)) = filter(g, (filter(f, xs))</code> 
+    <textarea id="filter_alg_4" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const event = x => x % 2 === 0;
+const positive = x => x > 0;
+const xs = [1, 2, 3];
+
+console.log(R.filter(even, (R.filter(positive, xs)), "equals", R.filter(positive, (R.filter(even, xs)));
+    </textarea>
+  </div>
+
+
+
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>filter</code> Workshop</h2>
+
+  <h3>Rewrite these examples as filter</h3>
+
+  <div><p>#1</p>
+    <textarea id="filter_example1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+    </textarea>
+  </div>
+  <div><p>#2</p>
+    <textarea id="filter_example2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+    </textarea>
+  </div>
+  <div><p>#3</p>
+    <textarea id="filter_example3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+    </textarea>
+  </div>
 </section>
 
 
