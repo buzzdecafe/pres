@@ -40,3 +40,34 @@
 .showme {
   opacity: 1.0 !important;
 }
+p.attrib {
+  padding-top: 32px;
+}
+.compare {
+  outline: 1px solid #66f;
+}
+thead {
+  background-color: #66f;
+  color: #fff;
+}
+tbody tr:nth-child(odd) {
+  background-color: #eef;
+}
+.compare > thead > tr > th {
+  width: 50%;
+}
+h3.yup, h3.nope {
+  animation: blinker 250ms linear 20;
+  font-size: 3em;
+  text-align: center;
+}
+@keyframes blinker {  
+  50% { opacity: 0; }
+}
+h3.yup {
+  color: green;
+}
+h3.nope {
+  color: red;
+}
+

@@ -60,14 +60,296 @@
     <img src="img/function_machines_composed.png" />
 
   </div>
-  <!--
-  <textarea id="example1" name="example1" class="code" mode="javascript" style="display: none;">// Simple composition
-const trim = str => str.replace(/^\s*|\s*$/g, '');
-const capitalize = str => str.toUpperCase();
+</section>
 
-const convert = compose(trim, capitalize); // Look ma! New function!
+<section class="slide">
+  <h2>Motivation: It's all about <em class="hot">function composition</em></h2>
+  <h3>What exactly do you mean by "function"?</h3>
+  <p>A function relates a set of inputs to a set of outputs.</p>
+  <figure>
+    <img src="img/f.svg" />
+  </figure>
+</section>
+
+<section class="slide">
+  <h2>What is a function?</h2>
+
+  <div>
+    <h3>Is this a function?</h3>
+    <textarea id="isit1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">function f(x) {
+  return x * 2;
+}
   </textarea>
-  -->
+  </div>
+
+  <div class="slide">
+    <h3 class="yup">YES</h3>
+  </div>
+  <div class="slide">
+    <p>A function takes arguments and returns results.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>What is a function?</h2>
+
+  <div>
+    <h3>Is this a function?</h3>
+    <textarea id="isit1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">function f(x) {
+  this.x = x; 
+}
+  </textarea>
+  </div>
+
+  <div class="slide">
+    <h3 class="nope">NO</h3>
+  </div>
+
+  <div class="slide">
+    <p>Functions only know about their arguments, and no other state. `this` is not an argument to `f`</p>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>What is a function?</h2>
+
+  <div>
+    <h3>Is this a function?</h3>
+    <textarea id="isit1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">function f(x, y) {
+  x.doubleY = y * 2;
+  return x;
+}
+  </textarea>
+  </div>
+
+  <div class="slide">
+    <h3 class="nope">NO</h3>
+  </div>
+  <div class="slide">
+    <p>A function does not mutate its arguments.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>What is a function?</h2>
+
+  <div>
+    <h3>Is this a function?</h3>
+    <textarea id="isit1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">function f(x, xs) {
+  xs.push(x);
+  return xs;
+}
+  </textarea>
+  </div>
+
+  <div class="slide">
+    <h3 class="nope">NO</h3>
+  </div>
+  <div class="slide">
+    <p>A function does not mutate its arguments. (Didn't I just say that?)</p>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>What is a function?</h2>
+
+  <div>
+    <h3>Is this a function?</h3>
+    <textarea id="isit1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">function f(xs) {
+  var i = 0, out = [];
+  for (i = 0, i < xs.length; i++) {
+    out.push(xs[i] * 2);
+  }
+  return out;
+}
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <h3 class="yup">YES</h3>
+  </div>
+
+  <div class="slide">
+    <p>Mutation of internal variables is permissible in the implementation of a 
+    function.</p>
+    <p>n.b.: In strict languages like Haskell, reassigning variables is not possible.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>What is a function?</h2>
+
+  <div>
+    <h3>Is this a function?</h3>
+    <textarea id="isit1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">function f(x, xs) {
+  xs.concat([x]);
+  return xs;
+}
+  </textarea>
+  </div>
+
+  <div class="slide">
+    <h3 class="yup">YUP</h3>
+  </div>
+
+  <div class="slide">
+    <p>A function may take more than one argument.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>What is a function?</h2>
+
+  <div>
+    <h3>Is this a function?</h3>
+    <textarea id="isit1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">function f(x, document) {
+  var s = x + "!!!";
+  document.querySelector('#exclaim').textContent = s;
+  return s; 
+}
+  </textarea>
+  </div>
+
+  <div class="slide">
+    <h3 class="nope">NO</h3>
+  </div>
+
+  <div class="slide">
+    <p>Functions do not perform side-effects.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>What is a function?</h2>
+
+  <div>
+    <h3>Is this a function?</h3>
+    <textarea id="isit1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">function f(x) {
+  var obj = {};
+  obj.x = x; 
+}
+  </textarea>
+  </div>
+
+  <div class="slide">
+    <h3 class="nope">NO</h3>
+  </div>
+
+  <div class="slide">
+    <p>Functions always return the value that results from their evaluation.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>What is a function?</h2>
+
+  <div>
+    <h3>Is this a function?</h3>
+    <textarea id="isit1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">function f(x) {
+  var obj = {};
+  obj.x = x; 
+  return obj;
+}
+  </textarea>
+  </div>
+
+  <div class="slide">
+    <h3 class="yup">YES</h3>
+  </div>
+  <div class="slide">
+    <p>Functions always return the value that results from their evaluation.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>What is a function?</h2>
+
+  <div>
+    <h3>Is `g` a function?</h3>
+    <textarea id="isit1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">function f(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+var g = f(10); // is `g` a function by our definition so far?
+  </textarea>
+  </div>
+
+  <div class="slide">
+    <h3 class="yup">YES</h3>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>What is a function?</h2>
+
+  <div>
+    <h3>Is `g` a function?</h3>
+    <textarea id="isit1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">function f(xs) {
+  return function(y) {
+    xs.push(y);
+    return xs;
+  };
+}
+var g = f([]);
+  </textarea>
+  </div>
+
+  <div class="slide">
+    <h3 class="nope">NO</h3>
+  </div>
+  <div class="slide">
+    <p>Functions always return the same value for the same arguments. Consider calling `g(1)` twice in a row. What does it return each time?</p>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>What is a function?</h2>
+
+  <h3>Review</h3>
+
+  <p>A function relates a set of inputs to a set of outputs.</p>
+
+  <ul>
+    <li>Functions take arguments and return results.</li>
+    <li>Functions only know about their arguments, and no other state.</li>
+    <li>Functions do not mutate their arguments.</li>
+    <li>Functions may take any number of arguments; even zero.</li>
+    <li>Functions do not perform side-effects.</li>
+    <li>Functions always return the value that results from their evaluation.</li>
+    <li>Functions always return the same value for the same arguments.</li>
+  </ul>
+
+  <p>(&hellip; and by the way: Mutation of internal variables is permissible in the implementation of a JavaScript function.)</p>
+</section>
+
+<section class="slide">
+  <h2>What not to do:</h2>
+
+  <ul>
+    <li>Don't fail to return a value.</li>
+    <li>Don't re-assign variables. (Once a variable has a value, it never changes.)</li>
+    <li>Don't mutate arguments. In fact, all mutation should be avoided.</li>
+    <li>Don't rely on any external state.</li>
+    <li>Don't perform side-effects.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>How to lose friends and alienate people</h2>
+  
+  <figure class="portrait">
+    <img src="img/monk.jpg" />
+    <caption>How Haskell programs are written</caption>
+  </figure>
+  <blockquote>
+    <p>The functional programmer sounds rather like a medieval monk, denying himself 
+    the pleasures of life in the hope that it will make him virtuous. </p>
+
+    <p class="attrib">&mdash; John Hughes, "Why Functional Programming Matters" (1984)</p>
+  </blockquote>
+
+
 </section>
 
 <section class="slide">
@@ -559,8 +841,9 @@ console.log(out);
   <h3>You can rewrite this:</h3>
   <div>
     <textarea id="filtercomp" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [-20, 113, 96, -999, 108, 0, 99, -2, -15, 96];
-const even x = x => x % 2 === 0;
+const even = x => x % 2 === 0;
 const positive = x => x > 0;
+
 const positiveEvens = R.compose(
   R.filter(even),
   R.filter(positive)
@@ -572,15 +855,30 @@ console.log(positiveEvens(xs));
   <div class="slide">
     <h3>... like this:</h3>
     <textarea id="filtercomp2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [113, 96, 108, 99, 96];
-const even x = x => x % 2 === 0;
+const even = x => x % 2 === 0;
 const positive = x => x > 0;
-const positiveEvens = R.filter(
-  R.both(positive, even)
-);
+
+const positiveEvens = R.filter(x => positive(x) && even(x));
 console.log(positiveEvens(xs));
     </textarea>
   </div>
 
+  <div class="slide">
+    <h3>... or even like this:</h3>
+    <textarea id="filtercompr3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [113, 96, 108, 99, 96];
+const even = x => x % 2 === 0;
+const positive = x => x > 0;
+
+const positiveEvens = R.filter(R.both(positive, even));
+console.log(positiveEvens(xs));
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <p>(... or if you have many predicates, maybe even 
+    <code>R.filter(R.allPass([p1, p2, ..., pn], xs)</code>)
+    </p>
+  </div>
 </section>
 
 
@@ -596,7 +894,7 @@ console.log(positiveEvens(xs));
   <h2>Lists: <code>filter</code> algebra</h2>
 
   <div>
-    <code>filter(T, xs) = xs</code>
+    <code>filter(T) = id</code>
     <textarea id="filter_alg_1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const T = x => true;
 const xs = [1, 2, 3];
 
@@ -605,7 +903,7 @@ console.log(R.filter(T, xs), "equals", xs);
   </div>
 
   <div>
-    <code>filter(F, xs) = []</code>
+    <code>filter(F) = Empty</code>
     <textarea id="filter_alg_2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const F = x => false;
 const xs = [1, 2, 3];
 
@@ -622,31 +920,35 @@ const T = x => true;
 console.log(R.filter(F, []), "equals", R.filter(T, []));
     </textarea>
   </div>
+</section>
 
+
+<section class="slide">
+
+  <h2>Lists: <code>filter</code> algebra (continued)</h2>
   <div>
     <h3>Conjunction</h3>
     <code>filter(f, filter(g, xs)) = filter(x => f(x) && g(x), xs)</code>
     <textarea id="filter_alg_3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const even = x => x % 2 === 0;
 const positive = x => x > 0;
-const xs = [1, 2, 3];
+const xs = [1, 2, 3, 4];
 
-console.log(R.filter(even, (R.filter(positive, xs)), "equals", R.filter(R.both(even, positive), xs);
+console.log(R.filter(even, R.filter(positive, xs)), "equals", 
+            R.filter(R.both(even, positive), xs));
     </textarea>
   </div>
 
   <div>
     <h3>Commutativity</h3>
     <code>filter(f, filter(g, xs)) = filter(g, (filter(f, xs))</code> 
-    <textarea id="filter_alg_4" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const event = x => x % 2 === 0;
+    <textarea id="filter_alg_4" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const even = x => x % 2 === 0;
 const positive = x => x > 0;
-const xs = [1, 2, 3];
+const xs = [1, 2, 3, 4];
 
-console.log(R.filter(even, (R.filter(positive, xs)), "equals", R.filter(positive, (R.filter(even, xs)));
+console.log(R.filter(even, R.filter(positive, xs)), "equals", 
+            R.filter(positive, R.filter(even, xs)));
     </textarea>
   </div>
-
-
-
 </section>
 
 <section class="slide">
@@ -655,15 +957,36 @@ console.log(R.filter(even, (R.filter(positive, xs)), "equals", R.filter(positive
   <h3>Rewrite these examples as filter</h3>
 
   <div><p>#1</p>
-    <textarea id="filter_example1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+    <textarea id="filter_example1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">var xs = [4, 9, 1, 3, 2, 1, 0, 1, 7], i = 0, matches = [], value = 1;
+for (i = 0; i < xs.length; i++) {
+  if (xs[i] === value) {
+    matches.push(i);
+  }
+}
+console.log(matches);
     </textarea>
   </div>
   <div><p>#2</p>
-    <textarea id="filter_example2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+    <textarea id="filter_example2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">var xs = ['a', 'B', 'c', 'X', 'y', 'Z'], result = [], i = 0;
+while (i < xs.length) {
+  if (xs[i].toUpperCase() === xs[i]) {
+    result = result.concat(xs[i]);
+  }
+  i++;
+}
+console.log(result);
     </textarea>
   </div>
   <div><p>#3</p>
-    <textarea id="filter_example3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+    <textarea id="filter_example3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">var xs = [4, 9, 1, 3, 2, 1, 0, 1, 7], out = [], i = 0;
+xs.forEach(function(x) {
+  if (x > 2) {
+    if (x % 2 === 1) {
+      out.push(i);
+    }
+  }
+});
+console.log(out);
     </textarea>
   </div>
 </section>
@@ -824,7 +1147,6 @@ const mxSum4 = R.compose(sum, R.map(mxSum3));
 <script src="core/deck.core.js"></script>
 
 <!-- Extension JS files. Add or remove as needed. -->
-<script src="core/deck.core.js"></script>
 <script src="extensions/hash/deck.hash.js"></script>
 <script src="extensions/menu/deck.menu.js"></script>
 <script src="extensions/goto/deck.goto.js"></script>
