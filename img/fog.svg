@@ -1,62 +1,428 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created by diasvg.py -->
-<svg width="24.397cm" height="13.332cm" viewBox="8.020 4.135 32.417 17.467"
- xmlns="http://www.w3.org/2000/svg"
- xmlns:xlink="http://www.w3.org/1999/xlink">
-<ellipse cx="20.793" cy="9.732" rx="1.953" ry="4.852" fill="#FFFFFF" stroke="none"  /><ellipse cx="20.793" cy="9.732" rx="1.953" ry="4.852" fill="none" stroke="#000000"  stroke-width="0.100" /><text x="20.802" y="7.009"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24.397cm"
+   height="13.332cm"
+   viewBox="8.020 4.135 32.417 17.467"
+   id="svg3758"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="fog.svg">
+  <metadata
+     id="metadata3856">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3854" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview3852"
+     showgrid="false"
+     inkscape:zoom="0.33893968"
+     inkscape:cx="432.2303"
+     inkscape:cy="236.19685"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg3758" />
+  <ellipse
+     cx="20.793"
+     cy="9.732"
+     rx="1.953"
+     ry="4.852"
+     fill="#FFFFFF"
+     stroke="none"
+     id="ellipse3760" />
+  <ellipse
+     cx="20.793"
+     cy="9.732"
+     rx="1.953"
+     ry="4.852"
+     fill="none"
+     stroke="#000000"
+     stroke-width="0.100"
+     id="ellipse3762" />
+  <text
+     x="20.802"
+     y="7.009"
+     fill="#000000"
+     text-anchor="start"
+     font-size="0.80"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3764">
 d</text>
-<text x="20.802" y="8.459"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+  <text
+     x="20.802"
+     y="8.459"
+     fill="#000000"
+     text-anchor="start"
+     font-size="0.80"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3766">
 e</text>
-<text x="20.802" y="9.695"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+  <text
+     x="20.802"
+     y="9.695"
+     fill="#000000"
+     text-anchor="start"
+     font-size="0.80"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3768">
 f</text>
-<text x="20.802" y="11.358"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+  <text
+     x="20.802"
+     y="11.358"
+     fill="#000000"
+     text-anchor="start"
+     font-size="0.80"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3770">
 g</text>
-<text x="21.005" y="12.807"  fill="#000000" text-anchor="middle" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+  <text
+     x="21.005"
+     y="12.807"
+     fill="#000000"
+     text-anchor="middle"
+     font-size="0.80"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3772">
 h</text>
-<text x="18.570" y="5.695"  fill="#000000" text-anchor="start" font-size="1.76" font-family="sans" font-style="normal" font-weight="400">
+  <text
+     x="18.570"
+     y="5.695"
+     fill="#000000"
+     text-anchor="start"
+     font-size="1.76"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3774">
 Y</text>
-<ellipse cx="10.463" cy="9.517" rx="1.953" ry="4.852" fill="#FFFFFF" stroke="none"  /><ellipse cx="10.463" cy="9.517" rx="1.953" ry="4.852" fill="none" stroke="#000000"  stroke-width="0.100" /><text x="10.673" y="9.595"  fill="#000000" text-anchor="end" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+  <ellipse
+     cx="10.463"
+     cy="9.517"
+     rx="1.953"
+     ry="4.852"
+     fill="#FFFFFF"
+     stroke="none"
+     id="ellipse3776" />
+  <ellipse
+     cx="10.463"
+     cy="9.517"
+     rx="1.953"
+     ry="4.852"
+     fill="none"
+     stroke="#000000"
+     stroke-width="0.100"
+     id="ellipse3778" />
+  <text
+     x="10.673"
+     y="9.595"
+     fill="#000000"
+     text-anchor="end"
+     font-size="0.80"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3780">
 b</text>
-<text x="10.658" y="8.029"  fill="#000000" text-anchor="end" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+  <text
+     x="10.658"
+     y="8.029"
+     fill="#000000"
+     text-anchor="end"
+     font-size="0.80"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3782">
 a</text>
-<text x="10.618" y="11.079"  fill="#000000" text-anchor="end" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+  <text
+     x="10.618"
+     y="11.079"
+     fill="#000000"
+     text-anchor="end"
+     font-size="0.80"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3784">
 c</text>
-<text x="8.020" y="5.445"  fill="#000000" text-anchor="start" font-size="1.76" font-family="sans" font-style="normal" font-weight="400">
+  <text
+     x="8.020"
+     y="5.445"
+     fill="#000000"
+     text-anchor="start"
+     font-size="1.76"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3786">
 X</text>
-<line x1="10.770" y1="8.045" x2="20.414" y2="12.504" stroke="#000000" stroke-width="0.100" />
-<polygon fill="#000000" stroke="none" stroke-width="0.100" points="20.619,12.598 20.283,12.608 20.414,12.504 20.409,12.336 "/>
-<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="20.619,12.598 20.283,12.608 20.414,12.504 20.409,12.336 "/>
-<line x1="10.870" y1="9.545" x2="20.486" y2="8.385" stroke="#000000" stroke-width="0.100" />
-<polygon fill="#000000" stroke="none" stroke-width="0.100" points="20.709,8.358 20.429,8.543 20.486,8.385 20.393,8.245 "/>
-<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="20.709,8.358 20.429,8.543 20.486,8.385 20.393,8.245 "/>
-<line x1="10.920" y1="10.995" x2="20.259" y2="7.075" stroke="#000000" stroke-width="0.100" />
-<polygon fill="#000000" stroke="none" stroke-width="0.100" points="20.467,6.988 20.248,7.243 20.259,7.075 20.132,6.966 "/>
-<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="20.467,6.988 20.248,7.243 20.259,7.075 20.132,6.966 "/>
-<ellipse cx="30.413" cy="9.967" rx="1.953" ry="4.852" fill="#FFFFFF" stroke="none"  /><ellipse cx="30.413" cy="9.967" rx="1.953" ry="4.852" fill="none" stroke="#000000"  stroke-width="0.100" /><text x="30.495" y="7.797"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+  <line
+     x1="10.770"
+     y1="8.045"
+     x2="20.414"
+     y2="12.504"
+     stroke="#000000"
+     stroke-width="0.100"
+     id="line3788" />
+  <polygon
+     fill="#000000"
+     stroke="none"
+     stroke-width="0.100"
+     points="20.619,12.598 20.283,12.608 20.414,12.504 20.409,12.336 "
+     id="polygon3790" />
+  <polygon
+     fill="none"
+     stroke="#000000"
+     stroke-width="0.100"
+     points="20.619,12.598 20.283,12.608 20.414,12.504 20.409,12.336 "
+     id="polygon3792" />
+  <line
+     x1="10.870"
+     y1="9.545"
+     x2="20.486"
+     y2="8.385"
+     stroke="#000000"
+     stroke-width="0.100"
+     id="line3794" />
+  <polygon
+     fill="#000000"
+     stroke="none"
+     stroke-width="0.100"
+     points="20.709,8.358 20.429,8.543 20.486,8.385 20.393,8.245 "
+     id="polygon3796" />
+  <polygon
+     fill="none"
+     stroke="#000000"
+     stroke-width="0.100"
+     points="20.709,8.358 20.429,8.543 20.486,8.385 20.393,8.245 "
+     id="polygon3798" />
+  <line
+     x1="10.920"
+     y1="10.995"
+     x2="20.259"
+     y2="7.075"
+     stroke="#000000"
+     stroke-width="0.100"
+     id="line3800" />
+  <polygon
+     fill="#000000"
+     stroke="none"
+     stroke-width="0.100"
+     points="20.467,6.988 20.248,7.243 20.259,7.075 20.132,6.966 "
+     id="polygon3802" />
+  <polygon
+     fill="none"
+     stroke="#000000"
+     stroke-width="0.100"
+     points="20.467,6.988 20.248,7.243 20.259,7.075 20.132,6.966 "
+     id="polygon3804" />
+  <ellipse
+     cx="30.413"
+     cy="9.967"
+     rx="1.953"
+     ry="4.852"
+     fill="#FFFFFF"
+     stroke="none"
+     id="ellipse3806" />
+  <ellipse
+     cx="30.413"
+     cy="9.967"
+     rx="1.953"
+     ry="4.852"
+     fill="none"
+     stroke="#000000"
+     stroke-width="0.100"
+     id="ellipse3808" />
+  <text
+     x="30.495"
+     y="7.797"
+     fill="#000000"
+     text-anchor="start"
+     font-size="0.80"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3810">
 i</text>
-<text x="30.495" y="9.322"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+  <text
+     x="30.495"
+     y="9.322"
+     fill="#000000"
+     text-anchor="start"
+     font-size="0.80"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3812">
 j</text>
-<text x="30.495" y="10.848"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+  <text
+     x="30.495"
+     y="10.848"
+     fill="#000000"
+     text-anchor="start"
+     font-size="0.80"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3814">
 k</text>
-<text x="30.495" y="12.373"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+  <text
+     x="30.495"
+     y="12.373"
+     fill="#000000"
+     text-anchor="start"
+     font-size="0.80"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3816">
 l</text>
-<text x="28.240" y="5.680"  fill="#000000" text-anchor="start" font-size="1.76" font-family="sans" font-style="normal" font-weight="400">
+  <text
+     x="28.240"
+     y="5.680"
+     fill="#000000"
+     text-anchor="start"
+     font-size="1.76"
+     font-family="sans"
+     font-style="normal"
+     font-weight="400"
+     id="text3818">
 Z</text>
-<line x1="21.300" y1="7.050" x2="29.939" y2="10.670" stroke="#000000" stroke-width="0.100" />
-<polygon fill="#000000" stroke="none" stroke-width="0.100" points="30.147,10.757 29.812,10.779 29.939,10.670 29.928,10.503 "/>
-<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="30.147,10.757 29.812,10.779 29.939,10.670 29.928,10.503 "/>
-<line x1="21.250" y1="11.100" x2="29.813" y2="11.100" stroke="#000000" stroke-width="0.100" />
-<polygon fill="#000000" stroke="none" stroke-width="0.100" points="30.038,11.100 29.738,11.250 29.813,11.100 29.738,10.950 "/>
-<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="30.038,11.100 29.738,11.250 29.813,11.100 29.738,10.950 "/>
-<line x1="21.350" y1="8.450" x2="29.914" y2="7.776" stroke="#000000" stroke-width="0.100" />
-<polygon fill="#000000" stroke="none" stroke-width="0.100" points="30.139,7.759 29.851,7.932 29.914,7.776 29.828,7.633 "/>
-<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="30.139,7.759 29.851,7.932 29.914,7.776 29.828,7.633 "/>
-<line x1="21.150" y1="9.550" x2="29.977" y2="12.155" stroke="#000000" stroke-width="0.100" />
-<polygon fill="#000000" stroke="none" stroke-width="0.100" points="30.193,12.218 29.863,12.277 29.977,12.155 29.947,11.990 "/>
-<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="30.193,12.218 29.863,12.277 29.977,12.155 29.947,11.990 "/>
-<line x1="21.250" y1="12.750" x2="29.913" y2="12.557" stroke="#000000" stroke-width="0.100" />
-<polygon fill="#000000" stroke="none" stroke-width="0.100" points="30.138,12.552 29.842,12.709 29.913,12.557 29.835,12.409 "/>
-<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="30.138,12.552 29.842,12.709 29.913,12.557 29.835,12.409 "/>
-<text x="19.350" y="17.200"  fill="#000000" text-anchor="start" font-size="1.41" font-family="sans" font-style="normal" font-weight="400">
-f ⚪ g</text>
+  <line
+     x1="21.300"
+     y1="7.050"
+     x2="29.939"
+     y2="10.670"
+     stroke="#000000"
+     stroke-width="0.100"
+     id="line3820" />
+  <polygon
+     fill="#000000"
+     stroke="none"
+     stroke-width="0.100"
+     points="30.147,10.757 29.812,10.779 29.939,10.670 29.928,10.503 "
+     id="polygon3822" />
+  <polygon
+     fill="none"
+     stroke="#000000"
+     stroke-width="0.100"
+     points="30.147,10.757 29.812,10.779 29.939,10.670 29.928,10.503 "
+     id="polygon3824" />
+  <line
+     x1="21.250"
+     y1="11.100"
+     x2="29.813"
+     y2="11.100"
+     stroke="#000000"
+     stroke-width="0.100"
+     id="line3826" />
+  <polygon
+     fill="#000000"
+     stroke="none"
+     stroke-width="0.100"
+     points="30.038,11.100 29.738,11.250 29.813,11.100 29.738,10.950 "
+     id="polygon3828" />
+  <polygon
+     fill="none"
+     stroke="#000000"
+     stroke-width="0.100"
+     points="30.038,11.100 29.738,11.250 29.813,11.100 29.738,10.950 "
+     id="polygon3830" />
+  <line
+     x1="21.350"
+     y1="8.450"
+     x2="29.914"
+     y2="7.776"
+     stroke="#000000"
+     stroke-width="0.100"
+     id="line3832" />
+  <polygon
+     fill="#000000"
+     stroke="none"
+     stroke-width="0.100"
+     points="30.139,7.759 29.851,7.932 29.914,7.776 29.828,7.633 "
+     id="polygon3834" />
+  <polygon
+     fill="none"
+     stroke="#000000"
+     stroke-width="0.100"
+     points="30.139,7.759 29.851,7.932 29.914,7.776 29.828,7.633 "
+     id="polygon3836" />
+  <line
+     x1="21.150"
+     y1="9.550"
+     x2="29.977"
+     y2="12.155"
+     stroke="#000000"
+     stroke-width="0.100"
+     id="line3838" />
+  <polygon
+     fill="#000000"
+     stroke="none"
+     stroke-width="0.100"
+     points="30.193,12.218 29.863,12.277 29.977,12.155 29.947,11.990 "
+     id="polygon3840" />
+  <polygon
+     fill="none"
+     stroke="#000000"
+     stroke-width="0.100"
+     points="30.193,12.218 29.863,12.277 29.977,12.155 29.947,11.990 "
+     id="polygon3842" />
+  <line
+     x1="21.250"
+     y1="12.750"
+     x2="29.913"
+     y2="12.557"
+     stroke="#000000"
+     stroke-width="0.100"
+     id="line3844" />
+  <polygon
+     fill="#000000"
+     stroke="none"
+     stroke-width="0.100"
+     points="30.138,12.552 29.842,12.709 29.913,12.557 29.835,12.409 "
+     id="polygon3846" />
+  <polygon
+     fill="none"
+     stroke="#000000"
+     stroke-width="0.100"
+     points="30.138,12.552 29.842,12.709 29.913,12.557 29.835,12.409 "
+     id="polygon3848" />
 </svg>

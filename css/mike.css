@@ -70,4 +70,6 @@ h3.yup {
 h3.nope {
   color: red;
 }
-
+figure.f {
+  text-align: center;
+}

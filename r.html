@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=1024, user-scalable=no">
 
-	<title>Zero to Ramda</title>
+	<title>From Zero to Ramda</title>
 	
 	<!-- Required stylesheet -->
 	<link rel="stylesheet" href="core/deck.core.css">
@@ -45,7 +45,7 @@
 
 <!-- Begin slides. Just make elements with a class of slide. -->
 <section class="slide">
-<h1 class="over">Zero to Ramda</h1>
+<h1 class="over">From Zero to Ramda</h1>
 <div>
   <p style="text-align: center"><em>Practical functional JavaScript</em></p>
   <img src="img/ramdaFilled_200x235.png" />
@@ -66,8 +66,9 @@
   <h2>Motivation: It's all about <em class="hot">function composition</em></h2>
   <h3>What exactly do you mean by "function"?</h3>
   <p>A function relates a set of inputs to a set of outputs.</p>
-  <figure>
-    <img src="img/f.svg" />
+  <figure class="f">
+    <img src="img/f.png" />
+    <figcaption>f : X &rarr; Y</figcaption>
   </figure>
 </section>
 
@@ -182,8 +183,7 @@
   <div>
     <h3>Is this a function?</h3>
     <textarea id="isit1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">function f(x, xs) {
-  xs.concat([x]);
-  return xs;
+  return xs.concat([x]);
 }
   </textarea>
   </div>
@@ -340,7 +340,7 @@ var g = f([]);
   
   <figure class="portrait">
     <img src="img/monk.jpg" />
-    <caption>How Haskell programs are written</caption>
+    <figcaption>How Haskell programs are written</figcaption>
   </figure>
   <blockquote>
     <p>The functional programmer sounds rather like a medieval monk, denying himself 
@@ -354,15 +354,27 @@ var g = f([]);
 
 <section class="slide">
   <h2>Motivation: It's all about <em class="hot">function composition</em></h2>
-  <img src="img/f.svg" />
-  <img src="img/g.svg" />
+  <figure class="f">
+    <img src="img/f.png" />
+    <figcaption>f : X &rarr; Y</figcaption>
+  </figure>
+  <figure class="f">
+    <img src="img/g.png" />
+    <figcaption>g : Y &rarr; Z</figcaption>
+  </figure>
 
 </section>
 
 <section class="slide">
   <h2>Motivation: It's all about <em class="hot">function composition</em></h2>
-  <img src="img/fog.svg" />
-  <img src="img/h.svg" class="slide" />
+  <figure class="f">
+    <img src="img/fog.png" />
+    <figcaption>f &#8728; g</figcaption>
+  </figure>
+  <figure class="f slide">
+    <img src="img/h.png" />
+    <figcaption>h : X &rarr; Z</figcaption>
+  </figure>
 
 </section>
 
@@ -920,6 +932,16 @@ const T = x => true;
 console.log(R.filter(F, []), "equals", R.filter(T, []));
     </textarea>
   </div>
+  <div>
+    <code>concat(filter(f, xs), filter(f, ys)) = filter(f, concat(xs, ys))</code> 
+    <textarea id="filter_alg_4" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const even = x => x % 2 === 0;
+const xs = [1, 2, -3];
+const ys = [10, 21, -30];
+
+console.log(R.concat(R.filter(even, xs), R.filter(even, ys)), "equals", 
+            R.filter(even, R.concat(xs, ys)));
+    </textarea>
+  </div>
 </section>
 
 
@@ -931,7 +953,7 @@ console.log(R.filter(F, []), "equals", R.filter(T, []));
     <code>filter(f, filter(g, xs)) = filter(x => f(x) && g(x), xs)</code>
     <textarea id="filter_alg_3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const even = x => x % 2 === 0;
 const positive = x => x > 0;
-const xs = [1, 2, 3, 4];
+const xs = [-2, 1, 2, 3, 4];
 
 console.log(R.filter(even, R.filter(positive, xs)), "equals", 
             R.filter(R.both(even, positive), xs));
@@ -943,12 +965,13 @@ console.log(R.filter(even, R.filter(positive, xs)), "equals",
     <code>filter(f, filter(g, xs)) = filter(g, (filter(f, xs))</code> 
     <textarea id="filter_alg_4" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const even = x => x % 2 === 0;
 const positive = x => x > 0;
-const xs = [1, 2, 3, 4];
+const xs = [1, 2, 3, 4, -8];
 
 console.log(R.filter(even, R.filter(positive, xs)), "equals", 
             R.filter(positive, R.filter(even, xs)));
     </textarea>
   </div>
+
 </section>
 
 <section class="slide">
