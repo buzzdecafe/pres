@@ -501,7 +501,8 @@ console.log("rcmult(3)(10) ->", rcmult(3)(10));
   <h2>Currying: What is it good for?</h2>
 
   <p>Remember: It's all about <em class="hot">composition</em>.<p>
-  <p>Functions inside a composition take only one argument.</p>
+  <p>Functions inside a composition take only one argument. By currying, 
+  we can turn a function of any arity into a function that takes one argument.</p>
   <p>Currying enables us to reuse code by building new functions from simple parts.</p>
 
   <div class="slide">
@@ -565,7 +566,25 @@ console.log("satisfiesInterface(badOne) ->", satisfiesInterface(badOne));
 
   <p>That's pretty much what you'll need. Any questions?</p>
 </section>
+<!--
+<section class="slide">
+  <h2>Lists: Quick digression</h2>
 
+  <h3>Why not Array?</h3>
+  <p><em>List</em> is a more fundamental data structure. It is defined recursively,
+  and may be evaluated lazily.</p>
+
+  <p><code>data List a = Nil | Cons (a, List a)</code></p> 
+  <p><code>data Stream a = Nil | Cons (a, () -&gt; Stream a)</code></p> 
+
+  <p><em>List</em> can be defined simply in terms of functions on pairs:</p>
+  <textarea id="list" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const cons = (x, y) => f => f(x, y);
+const car = f => f((x, y) => x);
+const cdr = f => f((x, y) => y);
+  </textarea>
+
+</section>
+-->
 <section class="slide">
   <h2>Lists: <code>map</code></h2>
 
@@ -746,15 +765,47 @@ console.log(R.compose(R.map(f), R.map(g))(ns), "equals", R.map(R.compose(f, g), 
   <h3>Rewrite these examples as maps</h3>
 
   <div><p>#1</p>
-    <textarea id="map_example1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+    <textarea id="map_example1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [{x: 1}, {x: 10}, {x: 100}, {x: 1000}];
+var i = 0, out = [];
+while (i < xs.length) {
+  if (xs[i].x % 25 === 0) {
+    out.push({x: -1});
+  } else {
+    xs[i].x = xs[i].x * 3;
+    out.push(xs[i]);
+  }
+  i++;
+}
+
+console.log(out);
     </textarea>
   </div>
   <div><p>#2</p>
-    <textarea id="map_example2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+    <textarea id="map_example2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [{seq: 1}, {seq: 4}, {seq: 5}, {seq: 7}];
+var i = 0, result = [];
+while(i < xs.length) {
+  if (i === 0) {
+    xs[i].seq = 1;
+    result.push(xs[i]);
+  } else {
+    xs[i].seq = xs[i-1].seq + 1;
+    result.push(xs[i]);
+  }
+  i++;
+}
+
+console.log(result);
     </textarea>
   </div>
   <div><p>#3</p>
-    <textarea id="map_example3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const f = n => String.fromCharCode(n);
+    <textarea id="map_example3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = "q`lc`".split('');
+var i = 0, out = [], y, c;
+for (i = 0; i < xs.length; i++) {
+  var y = xs[i].charCodeAt() + 1;
+  out.push(String.fromCharCode(y).toUpperCase());
+}
+
+console.log(out.join(''));
     </textarea>
   </div>
 </section>
