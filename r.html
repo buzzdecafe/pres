@@ -585,6 +585,15 @@ const cdr = f => f((x, y) => y);
 
 </section>
 -->
+
+<section class="slide">
+  <h2>Lists: <code>map</code></h2>
+
+  <figure class="f">
+    <img src="img/map.jpg" />
+  </figure>
+</section>
+
 <section class="slide">
   <h2>Lists: <code>map</code></h2>
 
@@ -808,6 +817,29 @@ for (i = 0; i < xs.length; i++) {
 console.log(out.join(''));
     </textarea>
   </div>
+</section>
+
+
+<section class="slide">
+  <h2>Lists: <code>map</code></h2>
+
+  <h3>Things to remember about <code>map</code></h3>
+
+  <ul>
+    <li>Transforms everything inside a container</li>
+    <li>Returns a container of the same shape</li>
+    <li>Identity Law</li>
+    <li>Composition Law</li>
+  </ul>
+</section>
+
+
+<section class="slide">
+  <h2>Lists: <code>filter</code></h2>
+
+  <figure class="f">
+    <img src="img/filter.jpg" />
+  </figure>
 </section>
 
 <section class="slide">
@@ -1065,10 +1097,67 @@ console.log(out);
   </div>
 </section>
 
+<section class="slide">
+  <h2>Lists: <code>filter</code></h2>
+
+  <h3>Things to remember about <code>filter</code></h3>
+
+  <ul>
+    <li>Rewrite-able with rules of filter algebra</li>
+    <li>Filter relies on something that can be Empty</li>
+    <li>Filter is bound up with the notion of <code>concat</code></li>
+  </ul>
+</section>
+
 
 <section class="slide">
   <h2>Lists: <code>reduce</code></h2>
 
+
+  <figure class="f">
+    <img src="img/fold.png" />
+    <figcaption>Reduce is also known as "fold"</figcaption>
+  </figure>
+</section>
+
+
+<section class="slide">
+  <h2>Lists: <code>reduce</code></h2>
+
+  <h3>Definition</h3>
+  <p><code>R.reduce(f, accumulator, xs)</code> creates a new accumulator by applying <code>f</code> to the accumulator along with each element of <code>xs</code>.</p> 
+
+
+  <div class="slide showme">
+    <h3>Pattern</h3>
+    <table class="patterns">
+      <tr>
+        <th></th>
+        <th>In</th>
+        <th>Function</th>
+        <th>Out</th>
+      </tr>
+      <tr>
+        <td>reduce</td>
+        <td><code>[&clubs; &clubs; &clubs;]</code></td>
+        <td><code>(&diams;, &clubs;) &rarr; &diams;</code></td>
+        <td><code>&diams;</code></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="slide">
+    <h3>When to use it</h3>
+    <ul>
+      <li>I have [&clubs;] and I want to get a different-shaped output; e.g. to sum over a list; To join a list of strings, etc.</li> 
+      <li>I want to go list to list, but it isn't a map or a filter.</li>
+    </ul>
+
+    <p>WARNING: With great power comes great responsibility. With reduce, 
+    you can do virtually anything -- you can even implement map and filter
+    in terms of reduce.
+    </p>
+  </div>
 </section>
 
 <section class="slide">
