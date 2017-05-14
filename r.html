@@ -173,7 +173,7 @@
   <div class="slide">
     <p>Mutation of internal variables is permissible in the implementation of a 
     function.</p>
-    <p>n.b.: In strict languages like Haskell, reassigning variables is not possible.</p>
+    <p>n.b.: In strict languages like Haskell, reassigning variables is not possible (although you <em>can</em> shadow them).</p>
   </div>
 </section>
 
@@ -660,19 +660,23 @@ console.log(result);
 
   <h3>Example #2: Comparison</h3>
   <div>
-    <textarea id="tomap1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">var i, upper, out = [];
-var xs = ['a', 'b', 'c', 'd', 'e'];
+    <textarea id="tomap1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">var xs = ['a', 'b', 'c', 'd', 'e'];
+var i, upper, out = [];
+
 for (i = 0; i < xs.length; i++) {
   upper = xs[i].toUpperCase();
   out.push(upper)
 }
+
 console.log(out);
     </textarea>
   </div>
 
   <div class="slide">
     <textarea id="tomap2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">var xs = ['a', 'b', 'c', 'd', 'e'];
+
 const out = R.map(R.toUpper, xs);
+
 console.log(out);
     </textarea>
   </div>
@@ -748,9 +752,8 @@ console.log(allTheThings(xs));
     <h4>Identity Law</h4>
     <p><code>map id = id</code></p>
     <textarea id="map_id_law" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const id = x => x;
-const mapId = R.map(id);
 
-console.log(mapId([1, 2, 3]), "equals", id([1, 2, 3]));
+console.log(R.map(id, [1, 2, 3]), "equals", id([1, 2, 3]));
     </textarea>
   </div>
 
@@ -1176,6 +1179,23 @@ console.log(out);
   <h2>Lists: <code>find</code></h2>
 
   <p>There is something <em>different</em> about <code>find</code> &hellip;</p>
+
+</section>
+
+<section class="slide">
+  <h2>Digression: Partial &amp; Total functions</h2>
+
+  <p><code>find</code> is a partial function.</p>
+  <p><code>map, filter, reduce, chain</code> are total functions.</p>
+
+  <h3>Why should I care if my function is partial?</h3>
+
+  <h3>How do I make a partial function a total function?</h3>
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>map, filter, reduce, find, chain</code> Workshop</h2>
+  <h3>Identify the pattern and rewrite</h3>
 </section>
 
 
@@ -1259,6 +1279,17 @@ const mxSum4 = R.compose(sum, R.map(mxSum3));
   <p>Let's write a function for a <em>N</em>-dimensional matrix.</p>
   <p>What pattern is would that be?</p>
 </section>
+
+<section class="slide">
+  <h2>Functor</h2>
+
+</section>
+
+<section class="slide">
+  <h2>Monoid</h2>
+
+</section>
+
 
 
 <section class="slide">
