@@ -911,8 +911,7 @@ console.log(result);
 var i = 0, out = [];
 for (i = 0; i < ns.length; i++) {
   if (ns[i] % 2 === 0) {
-      out.push(ns[i]);
-    }
+    out.push(ns[i]);
   }
 }
 console.log(out);
@@ -1156,11 +1155,251 @@ console.log(out);
       <li>I want to go list to list, but it isn't a map or a filter.</li>
     </ul>
 
-    <p>WARNING: With great power comes great responsibility. With reduce, 
-    you can do virtually anything -- you can even implement map and filter
-    in terms of reduce.
+</section>
+
+<section class="slide">
+  <!--h2>Lists: <code>reduce</code></h2-->
+
+  <figure class="f">
+    <img src="img/resp.jpg" />
+  </figure>
+
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>reduce</code></h2>
+  <div>
+    <h3>Example #1: Sum a list of numbers</h3>
+    <textarea id="fold1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [1, 10, 2, 20, 3, 30];
+
+const result = R.reduce((a, b) => a + b, 0, ns);
+
+console.log(result);
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <h3>Example #2: Turn an array of pairs into an object</h3>
+    <textarea id="fold2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [["a", 1], ["b", 2], ["c", 3], ["d", 444]];
+
+const result = R.reduce((acc, x) => {
+  acc[x[0]] = x[1];
+  return acc;
+}, {}, ns);
+
+console.log(result);
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>reduce</code></h2>
+
+  <h3>Example #3: Comparison</h3>
+  <div>
+    <textarea id="fold3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [1, 100, 2, 303, 11, 12, 4, 22, 0];
+var i = 0, out = [];
+for (i = 0; i < ns.length; i++) {
+  if (ns[i] % 2 === 0) {
+    out.push(ns[i]);
+  }
+}
+console.log(out);
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <textarea id="fold4" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const ns = [1, 100, 2, 303, 11, 12, 4, 22, 0];
+var out = R.filter(x => x % 2 === 0, ns);
+console.log(out);
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>filter</code></h2>
+
+  <p>It is all about <em class="hot">composition</em>.</p>
+
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>filter</code></h2>
+  <h3>You can rewrite this:</h3>
+  <div>
+    <textarea id="filtercomp" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [-20, 113, 96, -999, 108, 0, 99, -2, -15, 96];
+const even = x => x % 2 === 0;
+const positive = x => x > 0;
+
+const positiveEvens = R.compose(
+  R.filter(even),
+  R.filter(positive)
+);
+console.log(positiveEvens(xs));
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <h3>... like this:</h3>
+    <textarea id="filtercomp2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [113, 96, 108, 99, 96];
+const even = x => x % 2 === 0;
+const positive = x => x > 0;
+
+const positiveEvens = R.filter(x => positive(x) && even(x));
+console.log(positiveEvens(xs));
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <h3>... or even like this:</h3>
+    <textarea id="filtercompr3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [113, 96, 108, 99, 96];
+const even = x => x % 2 === 0;
+const positive = x => x > 0;
+
+const positiveEvens = R.filter(R.both(positive, even));
+console.log(positiveEvens(xs));
+    </textarea>
+  </div>
+
+  <div class="slide">
+    <p>(... or if you have many predicates, maybe even 
+    <code>R.filter(R.allPass([p1, p2, ..., pn], xs)</code>)
     </p>
   </div>
+</section>
+
+
+<section class="slide">
+  <h2>Lists: <code>filter</code></h2>
+  <p>Filter laws are a trickier matter -- let's table that. Nonetheless:</p>
+  <p>We can do these rewrites <em>confidently on lists</em> because <code>filter</code> on lists 
+  has some well-defined algebraic rules.</p>
+</section>
+
+
+<section class="slide">
+  <h2>Lists: <code>filter</code> algebra</h2>
+
+  <div>
+    <code>filter(T) = id</code>
+    <textarea id="filter_alg_1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const T = x => true;
+const xs = [1, 2, 3];
+
+console.log(R.filter(T, xs), "equals", xs);
+    </textarea>
+  </div>
+
+  <div>
+    <code>filter(F) = Empty</code>
+    <textarea id="filter_alg_2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const F = x => false;
+const xs = [1, 2, 3];
+
+console.log(R.filter(F, xs), "equals", []);
+    </textarea>
+  </div>
+
+  <div>
+    <code>filter(f, []) = []</code>
+    <textarea id="filter_alg_2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const xs = [1, 2, 3];
+const F = x => false;
+const T = x => true;
+
+console.log(R.filter(F, []), "equals", R.filter(T, []));
+    </textarea>
+  </div>
+  <div>
+    <code>concat(filter(f, xs), filter(f, ys)) = filter(f, concat(xs, ys))</code> 
+    <textarea id="filter_alg_4" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const even = x => x % 2 === 0;
+const xs = [1, 2, -3];
+const ys = [10, 21, -30];
+
+console.log(R.concat(R.filter(even, xs), R.filter(even, ys)), "equals", 
+            R.filter(even, R.concat(xs, ys)));
+    </textarea>
+  </div>
+</section>
+
+
+<section class="slide">
+
+  <h2>Lists: <code>filter</code> algebra (continued)</h2>
+  <div>
+    <h3>Conjunction</h3>
+    <code>filter(f, filter(g, xs)) = filter(x => f(x) && g(x), xs)</code>
+    <textarea id="filter_alg_3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const even = x => x % 2 === 0;
+const positive = x => x > 0;
+const xs = [-2, 1, 2, 3, 4];
+
+console.log(R.filter(even, R.filter(positive, xs)), "equals", 
+            R.filter(R.both(even, positive), xs));
+    </textarea>
+  </div>
+
+  <div>
+    <h3>Commutativity</h3>
+    <code>filter(f, filter(g, xs)) = filter(g, (filter(f, xs))</code> 
+    <textarea id="filter_alg_4" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">const even = x => x % 2 === 0;
+const positive = x => x > 0;
+const xs = [1, 2, 3, 4, -8];
+
+console.log(R.filter(even, R.filter(positive, xs)), "equals", 
+            R.filter(positive, R.filter(even, xs)));
+    </textarea>
+  </div>
+
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>filter</code> Workshop</h2>
+
+  <h3>Rewrite these examples as filter</h3>
+
+  <div><p>#1</p>
+    <textarea id="filter_example1" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">var xs = [4, 9, 1, 3, 2, 1, 0, 1, 7], i = 0, matches = [], value = 1;
+for (i = 0; i < xs.length; i++) {
+  if (xs[i] === value) {
+    matches.push(i);
+  }
+}
+console.log(matches);
+    </textarea>
+  </div>
+  <div><p>#2</p>
+    <textarea id="filter_example2" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">var xs = ['a', 'B', 'c', 'X', 'y', 'Z'], result = [], i = 0;
+while (i < xs.length) {
+  if (xs[i].toUpperCase() === xs[i]) {
+    result = result.concat(xs[i]);
+  }
+  i++;
+}
+console.log(result);
+    </textarea>
+  </div>
+  <div><p>#3</p>
+    <textarea id="filter_example3" class="code" name="code" mode="javascript" style="display: none" runnable="true" globals="R">var xs = [4, 9, 1, 3, 2, 1, 0, 1, 7], out = [], i = 0;
+xs.forEach(function(x) {
+  if (x > 2) {
+    if (x % 2 === 1) {
+      out.push(i);
+    }
+  }
+});
+console.log(out);
+    </textarea>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Lists: <code>filter</code></h2>
+
+  <h3>Things to remember about <code>filter</code></h3>
+
+  <ul>
+    <li>Rewrite-able with rules of filter algebra</li>
+    <li>Filter relies on something that can be Empty</li>
+    <li>Filter is bound up with the notion of <code>concat</code></li>
+  </ul>
 </section>
 
 <section class="slide">
@@ -1295,7 +1534,13 @@ const mxSum4 = R.compose(sum, R.map(mxSum3));
 <section class="slide">
 <h2>Final Thought</h2>
 
-<blockquote>Simplicity is hard work. But, there's a huge payoff. The person who has a genuinely simpler system - a system made out of genuinely simple parts, is going to be able to affect the greatest change with the least work. He's going to kick your ass. He's gonna spend more time simplifying things up front and in the long haul he's gonna wipe the plate with you because he'll have that ability to change things when you're struggling to push elephants around.
+<blockquote>Simplicity is hard work. But, there's a huge payoff. The 
+  person who has a genuinely simpler system&mdash;a system made out of 
+  genuinely simple parts&mdash;is going to be able to affect the greatest 
+  change with the least work. He's going to kick your ass. He's gonna 
+  spend more time simplifying things up front and in the long haul 
+  he's gonna wipe the plate with you because he'll have that ability 
+  to change things when you're struggling to push elephants around.
   
   <p>&mdash; Rich Hickey</p>
 </blockquote>
